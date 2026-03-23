@@ -1,0 +1,4 @@
+PLACE YOUR RESUME PDF IN THIS FOLDER
+
+Rename it to: Suriya_C_Resume.pdf
+Or update PERSONAL.resumePath in src/data.js to match your filename.
