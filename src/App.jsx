@@ -38,26 +38,25 @@ export default function App() {
     setIsSubmitting(true);
     
     const formData = new FormData(event.target);
-    // ⚠️ Replace this with your actual Web3Forms Access Key
-    formData.append("access_key", "5f887811-ea76-431c-8ff1-16598c120f44");
-
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("https://formspree.io/f/mgonjndk", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
         body: json
-      }).then((res) => res.json());
+      });
+      
+      const data = await response.json();
 
-      if (res.success) {
+      if (response.ok || data.ok) {
         setSent(true);
       } else {
-        alert(res.message || "Something went wrong. Please try again.");
+        alert(data.error || "Something went wrong. Please try again.");
       }
     } catch (err) {
       alert("Network error. Please try again.");
