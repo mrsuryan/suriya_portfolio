@@ -6,7 +6,6 @@ import Cursor      from "./components/Cursor";
 import Particles   from "./components/Particles";
 import Navbar      from "./components/Navbar";
 import DownloadBtn from "./components/DownloadBtn";
-import CountUp     from "./components/CountUp";
 import SkillBar    from "./components/SkillBar";
 import TiltCard    from "./components/TiltCard";
 import {
@@ -22,13 +21,13 @@ import useScrollReveal from "./hooks/useScrollReveal";
 import {
   PERSONAL, TYPING_ROLES, STATS, SOFT_SKILLS,
   PROFICIENCIES, STACK_CARDS, EXPERIENCE, EDUCATION,
-  PROJECTS, CERTIFICATIONS,
+  PROJECTS, CERTIFICATIONS, NAV_ITEMS,
 } from "./data";
 
 export default function App() {
-  const typed     = useTyping(TYPING_ROLES);
+  const typed = useTyping(TYPING_ROLES);
   const [activeNav, setActiveNav] = useState("home");
-  const [sent,      setSent]      = useState(false);
+  const [sent, setSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   useScrollReveal();
@@ -36,7 +35,6 @@ export default function App() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
-    
     const formData = new FormData(event.target);
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
@@ -44,15 +42,10 @@ export default function App() {
     try {
       const response = await fetch("https://formspree.io/f/mgonjndk", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: json
       });
-      
       const data = await response.json();
-
       if (response.ok || data.ok) {
         setSent(true);
       } else {
@@ -64,16 +57,12 @@ export default function App() {
     setIsSubmitting(false);
   };
 
-  // Duplicate certs for infinite marquee
-  const certsLoop = [...CERTIFICATIONS, ...CERTIFICATIONS, ...CERTIFICATIONS, ...CERTIFICATIONS];
-
-  // Track active section on scroll
   useEffect(() => {
-    const ids = ["home","about","skills","experience","projects","contact"];
+    const ids = ["home", "about", "skills", "experience", "projects", "contact"];
     const onScroll = () => {
       for (const id of [...ids].reverse()) {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 100) {
+        if (el && el.getBoundingClientRect().top <= 150) {
           setActiveNav(id);
           break;
         }
@@ -88,345 +77,245 @@ export default function App() {
     setActiveNav(id);
   };
 
-  /* ══════════════════════════════════════════════════════════════
-     RENDER
-  ══════════════════════════════════════════════════════════════ */
   return (
-    <div style={{ minHeight: "100vh" }}>
-      {/* Fixed background layers */}
-      <div className="noise" />
+    <div className="bg-dark">
       <Particles />
       <Cursor />
-
-      {/* ── Navigation ── */}
       <Navbar activeNav={activeNav} navTo={navTo} />
 
-      {/* ════════════════════════════════════════
-          HERO
-      ════════════════════════════════════════ */}
-      <section className="page-s hero" id="home">
-        <div className="hero-ambient" />
-        <div className="hero-grid-bg" />
-
-        {/* Spinning orbital rings */}
-        {[
-          { s:580, c:"rgba(0,245,196,.035)",  dur:"40s", rev:false },
-          { s:380, c:"rgba(124,58,237,.05)",  dur:"28s", rev:true  },
-          { s:200, c:"rgba(236,72,153,.07)",  dur:"18s", rev:false },
-        ].map((r, i) => (
-          <div key={i} className="spin-ring" style={{
-            width:r.s, height:r.s,
-            border:`1px dashed ${r.c}`,
-            animation:`spinSlow ${r.dur} linear infinite${r.rev?" reverse":""}`,
-          }} />
-        ))}
-
-        {/* Floating ambient orbs */}
-        {[
-          { w:320,h:320, top:"8%",    right:"-2%",  bg:"radial-gradient(circle,rgba(124,58,237,.13),transparent 70%)", dur:"8s",   delay:"0s"   },
-          { w:260,h:260, bottom:"12%",left:"-2%",   bg:"radial-gradient(circle,rgba(0,245,196,.09),transparent 70%)",  dur:"9.5s", delay:"3s"   },
-          { w:180,h:180, top:"38%",   right:"12%",  bg:"radial-gradient(circle,rgba(236,72,153,.09),transparent 70%)", dur:"7s",   delay:"1.5s" },
-        ].map((o, i) => (
-          <div key={i} style={{
-            position:"absolute", width:o.w, height:o.h,
-            top:o.top, bottom:o.bottom, left:o.left, right:o.right,
-            background:o.bg, borderRadius:"50%", pointerEvents:"none",
-            animation:`floatOrb ${o.dur} ease-in-out infinite ${o.delay}`,
-          }} />
-        ))}
-
-        <div className="hero-badge">
-          <span className="badge-pulse" />{PERSONAL.badge}
-        </div>
-
-        <h1 className="hero-name glitch">
-          <span className="grad-text">{PERSONAL.name.split(" ")[0]}</span>
-          {/* <span className="outline-text">{PERSONAL.name.split(" ")[0]}</span> */}
-        </h1>
-
-        <p className="hero-sub">{PERSONAL.tagline}</p>
-        <div className="scan-line" style={{ width:180 }} />
-        <p className="hero-typed">{typed}<span className="tcursor" /></p>
-
-        <p className="hero-desc">{PERSONAL.description}</p>
-
-        <div className="hero-btns">
-          <button className="btn-pri"   onClick={() => navTo("projects")}>⚡ View Projects</button>
-          <button className="btn-ghost" onClick={() => navTo("contact")}>📡 Contact Me</button>
-          <DownloadBtn label="Download Resume" className="dl-btn" />
-        </div>
-
-        <div className="hero-stats">
-          {STATS.map(x => (
-            <div key={x.label} style={{ textAlign:"center" }}>
-              <div className="hstat-n"><CountUp end={x.n} suffix={x.suffix} /></div>
-              <div className="hstat-l">{x.label}</div>
+      {/* ── HERO ── */}
+      <section className="hero" id="home">
+        <div className="container hero-content reveal">
+          <div className="hero-text-block">
+            <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px" }}>Software Engineer & Full Stack Developer</span>
+            <h1 className="hero-name">
+              Hey, I'm <span className="grad-text">Suriya C</span><br />
+              <span style={{ fontSize: "0.5em", opacity: 0.8 }}>I'm a {typed}</span>
+            </h1>
+            <p className="hero-tagline">{PERSONAL.tagline}</p>
+            <p className="hero-desc">{PERSONAL.description}</p>
+            <div className="hero-btns">
+              <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
+              <DownloadBtn label="Download Resume" className="btn btn-outline" />
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="scroll-hint">
-          <div className="scroll-bar" />SCROLL DOWN
+          <div className="hero-profile-container">
+            <img 
+              src="/suriya_img.png" 
+              alt={PERSONAL.name} 
+              className="hero-profile-img"
+              onError={(e) => { e.target.src = "/suriya_img.png" }}
+            />
+          </div>
         </div>
       </section>
 
-      <div className="sdiv" />
-
-      {/* ════════════════════════════════════════
-          ABOUT
-      ════════════════════════════════════════ */}
-      <section className="page-s" id="about">
-        <div className="wrap sw">
-          <div className="eyebrow rev" data-delay="0"><span className="eyebrow-line" />01 — About Me</div>
-          <h2 className="sh2 rev" data-delay=".1">Who I <em className="hl">Am</em></h2>
-
-          <div className="about-grid">
-            <div className="revl" data-delay=".15">
-              <p className="about-p">
-                I'm <strong>{PERSONAL.name}</strong>, a final-year{" "}
-                <span className="hl-inline">Computer Science &amp; Engineering</span>{" "}
-                student at Chendhuran College of Engineering and Technology, Pudukkottai — graduating <strong>2026</strong>.
-              </p>
-              <p className="about-p">
-                I specialize in <strong>Full Stack Development</strong> with Python &amp; Django,
-                and I'm passionate about integrating <strong>AI/ML</strong> into real-world apps.
-                Clean code, fast shipping.
-              </p>
-              <p className="about-p">
-                Currently gaining hands-on experience as a <strong>Full Stack Developer Intern</strong>{" "}
-                at <span className="hl-inline">Pydun Technology</span>, building production Django apps.
-              </p>
-              <div className="softpills">
-                {SOFT_SKILLS.map(s => <span key={s} className="spill">{s}</span>)}
+      {/* ── ABOUT ── */}
+      <section id="about">
+        <div className="container reveal">
+          <span className="section-subtitle">01 / Foundation</span>
+          <h2 className="section-title">Who I <span className="grad-text">Am</span></h2>
+          
+          <div className="about-split">
+            <div className="about-text-content">
+              <p style={{ fontSize: "1.2rem", color: "var(--text-main)", marginBottom: "30px", lineHeight: "1.7" }}>{PERSONAL.description}</p>
+              <div className="project-tags" style={{ marginBottom: "40px" }}>
+                {SOFT_SKILLS.map(s => <span key={s} className="tag">{s}</span>)}
               </div>
-              <div style={{ marginTop:32 }}>
-                <DownloadBtn label="Download Resume" />
-              </div>
+              <button className="btn btn-outline" onClick={() => navTo("contact")}>Let's Connect</button>
             </div>
 
-            <div className="revr" data-delay=".2">
-              <div className="stat-cubes">
-                {STATS.map(x => (
-                  <div key={x.label} className="scube">
-                    <span className="scube-n"><CountUp end={x.n} suffix={x.suffix} /></span>
-                    <span className="scube-l">{x.label}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="about-metrics">
+               {STATS.filter(s => ["Projects Built", "Internship Exp", "Certifications"].includes(s.label)).map(x => (
+                <div key={x.label} className="ach-card glass" style={{ textAlign: "left", padding: "20px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span className="ach-label" style={{ fontSize: "1.1rem", color: "var(--text-main)", fontWeight: "600" }}>{x.label}</span>
+                  <span className="ach-number" style={{ fontSize: "2rem", marginBottom: 0 }}>{x.n}{x.suffix}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <div className="sdiv" />
-
-      {/* ════════════════════════════════════════
-          SKILLS
-      ════════════════════════════════════════ */}
-      <section className="page-s" id="skills">
-        <div className="wrap sw">
-          <div className="eyebrow rev"><span className="eyebrow-line" />02 — Skills</div>
-          <h2 className="sh2 rev" data-delay=".1">Tech <em className="hl">Stack</em></h2>
-
-          <div className="sbar-cols">
-            <div className="revl" data-delay=".15">
+      {/* ── SKILLS ── */}
+      <section id="skills" className="bg-card">
+        <div className="container reveal">
+          <span className="section-subtitle">02 / Expertise</span>
+          <h2 className="section-title">My Tech <span className="grad-text">Stack</span></h2>
+          
+          <div className="contact-container" style={{ marginBottom: "60px" }}>
+            <div style={{ display: "grid", gap: "20px" }}>
               {PROFICIENCIES.slice(0, 4).map(s => <SkillBar key={s.label} {...s} />)}
             </div>
-            <div className="revr" data-delay=".2">
+            <div style={{ display: "grid", gap: "20px" }}>
               {PROFICIENCIES.slice(4).map(s => <SkillBar key={s.label} {...s} />)}
             </div>
           </div>
 
-          <div className="stag-grid">
+          <div className="skill-grid">
             {STACK_CARDS.map((c, i) => (
-              <div key={c.label} className="stagcard rev" data-delay={.1 + i * .07}>
-                <div className="stag-head"><div className="stag-ico">{c.icon}</div>{c.label}</div>
-                <div className="tagcloud">{c.items.map(t => <span key={t} className="ttag">{t}</span>)}</div>
+              <div key={c.label} className="skill-card glass">
+                <div className="skill-icon">{c.icon}</div>
+                <div className="skill-name">{c.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <div className="sdiv" />
-
-      {/* ════════════════════════════════════════
-          EXPERIENCE
-      ════════════════════════════════════════ */}
-      <section className="page-s" id="experience">
-        <div className="wrap sw">
-          <div className="eyebrow rev"><span className="eyebrow-line" />03 — Experience</div>
-          <h2 className="sh2 rev" data-delay=".1">Work <em className="hl2">History</em></h2>
-
-          <div className="tl-wrap rev" data-delay=".15">
-            <div className="tl-rail" />
-            {EXPERIENCE.map((exp, i) => (
-              <div key={i} className="tl-node" data-delay={.2 + i * .1}>
-                <div className="tl-orb"><div className="tl-orb-inner" /></div>
-                <div className="tlcard">
-                  <div className="tlcard-head">
-                    <div>
-                      <div className="tl-role">{exp.role}</div>
-                      <div className="tl-co">⚡ {exp.company}</div>
-                    </div>
-                    <span className="tl-badge">{exp.period}</span>
-                  </div>
-                  <ul className="tl-list">
-                    {exp.bullets.map((b, j) => <li key={j}>{b}</li>)}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="edu-rows">
-            <div className="eyebrow rev" style={{ marginBottom:16 }}>
-              <span className="eyebrow-line" />Education
-            </div>
-            {EDUCATION.map((e, i) => (
-              <div key={e.year} className="edu-row rev" data-delay={.1 + i * .08}>
-                <div>
-                  <div className="edu-deg">{e.degree}</div>
-                  <div className="edu-inst">{e.institution}</div>
-                </div>
-                <span className="tl-badge">{e.year}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="sdiv" />
-
-      {/* ════════════════════════════════════════
-          PROJECTS
-      ════════════════════════════════════════ */}
-      <section className="page-s" id="projects">
-        <div className="wrap sw">
-          <div className="eyebrow rev"><span className="eyebrow-line" />04 — Projects</div>
-          <h2 className="sh2 rev" data-delay=".1">What I've <em className="hl">Built</em></h2>
-
-          <div className="proj-grid">
-            {PROJECTS.map(p => (
-              <TiltCard key={p.number}>
-                <div className="pcard-glow" />
-                <div className="pcard-body">
-                  <div className="pcard-num">{p.number}</div>
-                  <span className="pcard-icon">{p.icon}</span>
-                  <div className="pcard-title">{p.title}</div>
-                  <p className="pcard-desc">{p.desc}</p>
-                  <div className="pchips">
-                    {p.chips.map(c => <span key={c} className="pchip">{c}</span>)}
-                  </div>
-                </div>
-                <div className="pcard-foot">
-                  <a className="pfoot-link" href={p.liveUrl} target="_blank" rel="noreferrer">◈ VIEW PROJECT</a>
-                  <a className="pfoot-link" href={p.sourceUrl} target="_blank" rel="noreferrer" style={{ marginLeft:"auto" }}>⎘ SOURCE</a>
-                </div>
-              </TiltCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="sdiv" />
-
-      {/* ════════════════════════════════════════
-          CERTIFICATIONS
-      ════════════════════════════════════════ */}
-      <section className="page-s">
-        <div className="wrap sw">
-          <div className="eyebrow rev"><span className="eyebrow-line" />05 — Certifications</div>
-          <h2 className="sh2 rev" data-delay=".1">Learning <em className="hl2">Path</em></h2>
-        </div>
-        <div className="mq-wrap rev" data-delay=".15">
-          <div className="mq-track">
-            {certsLoop.map((c, i) => (
-              <div key={i} className="ccard">
-                <div className="ccard-ico">{c.icon}</div>
-                <div>
-                  <div className="ccard-name">{c.name}</div>
-                  <div className="ccard-iss">{c.issuer}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="sdiv" />
-
-      {/* ════════════════════════════════════════
-          CONTACT
-      ════════════════════════════════════════ */}
-      <section className="page-s" id="contact">
-        <div className="wrap sw">
-          <div className="eyebrow rev"><span className="eyebrow-line" />06 — Contact</div>
-          <h2 className="sh2 rev" data-delay=".1">Let's <em className="hl">Connect</em></h2>
-
-          <div className="contact-grid">
-            {/* Left — contact links */}
+      {/* ── EXPERIENCE & EDUCATION ── */}
+      <section id="experience" className="bg-card">
+        <div className="container reveal">
+          <div className="contact-container">
             <div>
-              <p className="contact-lede revl" data-delay=".15">
-                Actively seeking full-time roles &amp; internships. Have a project or opportunity?
-                My inbox is always open.
-              </p>
-              <div className="clinks">
-                {[
-                  { id:"email",    label:"Email",    val: PERSONAL.email,    href:`mailto:${PERSONAL.email}`,    Icon:EmailIcon    },
-                  { id:"phone",    label:"Phone",    val: PERSONAL.phone,    href:`tel:${PERSONAL.phone.replace(/\s/g,"")}`,  Icon:PhoneIcon    },
-                  { id:"linkedin", label:"LinkedIn", val: "suriya-c-64218930b", href:PERSONAL.linkedin,          Icon:LinkedInIcon },
-                  { id:"github",   label:"GitHub",   val: "mrsuriyan",          href:PERSONAL.github,            Icon:GitHubIcon   },
-                  { id:"whatsapp", label:"WhatsApp", val: "+91 7904998763",     href:PERSONAL.whatsapp,          Icon:WhatsAppIcon },
-                ].map((c, i) => (
-                  <a
-                    key={c.id}
-                    className="clrow revl"
-                    data-delay={.2 + i * .06}
-                    href={c.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <div className="cl-ico"><c.Icon /></div>
-                    <div>
-                      <div className="cl-label">{c.label}</div>
-                      <div className="cl-val">{c.val}</div>
+              <span className="section-subtitle">04 / Experience</span>
+              <h2 className="section-title" style={{ textAlign: "left" }}>Where I've <span className="grad-text">Worked</span></h2>
+              <div className="contact-items">
+                {EXPERIENCE.map((exp, i) => (
+                  <div key={i} className="glass" style={{ padding: "30px", marginBottom: "20px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
+                      <h3 style={{ fontSize: "1.3rem" }}>{exp.role}</h3>
+                      <span className="tag" style={{ color: "var(--accent-cyan)", borderColor: "var(--accent-cyan)" }}>{exp.period}</span>
                     </div>
-                  </a>
+                    <p style={{ color: "var(--accent-cyan)", marginBottom: "15px", fontWeight: "600" }}>{exp.company}</p>
+                    <ul style={{ listStyle: "none" }}>
+                      {exp.bullets.map((b, j) => (
+                        <li key={j} style={{ color: "var(--text-muted)", marginBottom: "10px", paddingLeft: "20px", position: "relative" }}>
+                          <span style={{ position: "absolute", left: 0, color: "var(--accent-cyan)" }}>▹</span> {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
               </div>
             </div>
+            <div>
+              <span className="section-subtitle">05 / Education</span>
+              <h2 className="section-title" style={{ textAlign: "left" }}>Background</h2>
+              <div className="contact-items">
+                {EDUCATION.map((edu, i) => (
+                  <div key={i} className="glass" style={{ padding: "30px", marginBottom: "20px" }}>
+                    <h3 style={{ fontSize: "1.1rem", marginBottom: "10px" }}>{edu.degree}</h3>
+                    <p style={{ color: "var(--text-muted)", marginBottom: "5px" }}>{edu.institution}</p>
+                    <span className="tag">{edu.year}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Right — contact form */}
-            <div className="cf-wrap revr" data-delay=".2">
-              <div className="cf-title">// SEND A MESSAGE</div>
+      {/* ── PROJECTS ── */}
+      <section id="projects">
+        <div className="container reveal">
+          <span className="section-subtitle">03 / Portfolio</span>
+          <h2 className="section-title">Featured <span className="grad-text">Projects</span></h2>
+          <div className="project-grid">
+            {PROJECTS.map(p => (
+              <div key={p.number} className="project-card glass" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <div className="project-image-container" style={{ position: "relative", height: "200px", overflow: "hidden", background: "rgba(255,255,255,0.05)" }}>
+                  {p.poster ? (
+                    <img src={p.poster} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }} />
+                  ) : (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: "3.5rem", opacity: 0.8 }}>
+                      {p.icon || "💻"}
+                    </div>
+                  )}
+                  <div className="project-overlay" />
+                </div>
+                <div className="project-content" style={{ padding: "30px", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <h3 className="project-title" style={{ marginTop: 0 }}>{p.title}</h3>
+                  <p className="project-desc" style={{ flex: 1 }}>{p.desc}</p>
+                  <div className="project-tags" style={{ marginTop: "auto", marginBottom: "20px" }}>
+                    {p.chips.map(c => <span key={c} className="tag">{c}</span>)}
+                  </div>
+                  <div className="project-links">
+                    {p.liveUrl.toLowerCase().includes("soon") ? (
+                      <div className="btn btn-outline btn-coming-soon" style={{ padding: "8px 16px", fontSize: "0.8rem", cursor: "default" }}>
+                         <span className="btn-text-main">Live Demo</span>
+                         <span className="btn-text-hover">Coming Soon</span>
+                      </div>
+                    ) : (
+                      <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>Live Demo</a>
+                    )}
+                    
+                    {p.sourceUrl.toLowerCase().includes("soon") ? (
+                      <div className="btn btn-outline btn-coming-soon" style={{ padding: "8px 16px", fontSize: "0.8rem", cursor: "default" }}>
+                         <span className="btn-text-main">View Code</span>
+                         <span className="btn-text-hover">Coming Soon</span>
+                      </div>
+                    ) : (
+                      <a href={p.sourceUrl} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>View Code</a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ── CONTACT ── */}
+      <section id="contact">
+        <div className="container reveal">
+          <span className="section-subtitle">06 / Contact</span>
+          <h2 className="section-title">Let's <span className="grad-text">Build Something</span></h2>
+          
+          <div className="contact-container">
+            <div className="contact-info">
+              <h3>Get In Touch</h3>
+              <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+              <div className="contact-items">
+                <a href={PERSONAL.email} className="contact-item">
+                  <div className="contact-icon"><EmailIcon /></div>
+                  <div>
+                    <div className="form-label" style={{ marginBottom: 0 }}>Email</div>
+                    <div className="skill-name">mrsuriyan200549@gmail.com</div>
+                  </div>
+                </a>
+                <a href={PERSONAL.linkedin} target="_blank" rel="noreferrer" className="contact-item">
+                  <div className="contact-icon"><LinkedInIcon /></div>
+                  <div>
+                    <div className="form-label" style={{ marginBottom: 0 }}>LinkedIn</div>
+                    <div className="skill-name">Suriya C</div>
+                  </div>
+                </a>
+                <a href={PERSONAL.whatsapp} target="_blank" rel="noreferrer" className="contact-item">
+                  <div className="contact-icon"><WhatsAppIcon /></div>
+                  <div>
+                    <div className="form-label" style={{ marginBottom: 0 }}>WhatsApp</div>
+                    <div className="skill-name">Chat with Me</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="glass" style={{ padding: "40px" }}>
               {sent ? (
-                <div className="form-ok">
-                  <div className="form-ok-ico">✅</div>
-                  <div className="form-ok-t">MESSAGE TRANSMITTED</div>
-                  <div className="form-ok-s">I'll get back to you ASAP.</div>
+                <div style={{ textAlign: "center", padding: "40px 0" }}>
+                  <div style={{ fontSize: "3rem", marginBottom: "20px" }}>🚀</div>
+                  <h3>Message Sent!</h3>
+                  <p>Thanks for reaching out. I'll get back to you shortly.</p>
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit}>
-                  <div className="fg">
-                    <label className="flabel">Name</label>
-                    <input className="finput" name="name" required placeholder="Your full name" />
+                  <div className="form-group">
+                    <label className="form-label">Name</label>
+                    <input className="form-input" name="name" required placeholder="John Doe" />
                   </div>
-                  <div className="fg">
-                    <label className="flabel">Email</label>
-                    <input className="finput" type="email" name="email" required placeholder="your@email.com" />
+                  <div className="form-group">
+                    <label className="form-label">Email</label>
+                    <input className="form-input" type="email" name="email" required placeholder="john@example.com" />
                   </div>
-                  <div className="fg">
-                    <label className="flabel">Message</label>
-                    <textarea className="ftarea" name="message" required placeholder="Tell me about your opportunity…" />
+                  <div className="form-group">
+                    <label className="form-label">Message</label>
+                    <textarea className="form-textarea" name="message" required placeholder="How can I help you?" />
                   </div>
-                  <button
-                    type="submit"
-                    className="btn-pri"
-                    style={{ width:"100%", justifyContent:"center" }}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "📡 TRANSMITTING..." : "📡 TRANSMIT MESSAGE"}
+                  <button type="submit" className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isSubmitting}>
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               )}
@@ -435,30 +324,59 @@ export default function App() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          FOOTER
-      ════════════════════════════════════════ */}
       <footer className="footer">
-        <div className="footer-logo">{PERSONAL.logoText}</div>
-        <div className="footer-copy">
-          BUILT BY <span>{PERSONAL.name.toUpperCase()}</span> · <span>2026</span> · TAMIL NADU
-        </div>
-        <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-          <DownloadBtn label="Resume" className="dl-btn" />
-          <div className="fsoc-row">
-            <a className="fsoc fsoc-li" href={PERSONAL.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-              <LinkedInIconSm />
-            </a>
-            <a className="fsoc fsoc-gh" href={PERSONAL.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-              <GitHubIconSm />
-            </a>
-            <a className="fsoc fsoc-wa" href={PERSONAL.whatsapp} target="_blank" rel="noreferrer" aria-label="WhatsApp">
-              <WhatsAppIconSm />
-            </a>
-            <a className="fsoc fsoc-em" href={`mailto:${PERSONAL.email}`} target="_blank" rel="noreferrer" aria-label="Email">
-              <EmailIconSm />
-            </a>
+        <div className="container footer-grid">
+          {/* LEFT: Brand & Location */}
+          <div className="footer-col">
+            <h4>Information</h4>
+            <div className="footer-brand">
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <img src="/brand_logo.png" alt="Logo" style={{ width: "30px", height: "30px", borderRadius: "6px" }} />
+                <span className="footer-logo grad-text" style={{ fontSize: "1.2rem", marginBottom: 0 }}>{PERSONAL.logoText}</span>
+              </div>
+              <div className="footer-contact-item">
+                <span>📍 {PERSONAL.location}</span>
+              </div>
+              <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>{PERSONAL.tagline}</p>
+            </div>
           </div>
+
+          {/* CENTER: Navigation */}
+          <div className="footer-col" style={{ textAlign: "center" }}>
+            <h4>Quick Links</h4>
+            <div className="footer-nav" style={{ alignItems: "center" }}>
+              {NAV_ITEMS.map(s => (
+                <button key={s} className="footer-nav-link" onClick={() => navTo(s)}>
+                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT: Contact Details */}
+          <div className="footer-col" style={{ textAlign: "right" }}>
+            <h4>Contact Me</h4>
+            <div className="footer-nav" style={{ alignItems: "flex-end" }}>
+              <a href={PERSONAL.email} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+                <EmailIconSm />
+                <span>mrsuriyan200549@gmail.com</span>
+              </a>
+              <a href={PERSONAL.whatsapp} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+                <WhatsAppIconSm />
+                <span>{PERSONAL.phone}</span>
+              </a>
+              <a href={PERSONAL.github} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+                <GitHubIconSm />
+                <span>GitHub</span>
+              </a>
+              <a href={PERSONAL.linkedin} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+                <LinkedInIconSm />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+
+          <p className="copyright">© {new Date().getFullYear()} {PERSONAL.name}. All Rights Reserved.</p>
         </div>
       </footer>
     </div>

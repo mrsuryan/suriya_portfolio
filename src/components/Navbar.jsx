@@ -13,7 +13,7 @@ export default function Navbar({ activeNav, navTo }) {
 
   // Scrolled state for backdrop
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -31,59 +31,54 @@ export default function Navbar({ activeNav, navTo }) {
 
   return (
     <>
-      {/* ── Desktop nav ── */}
-      <nav className={`nav${scrolled ? " scrolled" : ""}`}>
-        <div className="nav-logo" onClick={() => handleNavTo("home")}>
-          {PERSONAL.logoText}
-        </div>
+      <nav className={`nav${scrolled ? " scrolled" : ""}${menuOpen ? " menu-open" : ""}`}>
+        <div className="container nav-container">
+          <div className="nav-logo" onClick={() => handleNavTo("home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src="/brand_logo.png" alt="Logo" style={{ width: "32px", height: "32px", borderRadius: "6px" }} />
+            <span>{PERSONAL.logoText}</span>
+          </div>
 
-        <div className="nav-desktop">
+          <div className="nav-links desktop-only">
+            {NAV_ITEMS.map(s => (
+              <button
+                key={s}
+                className={`nav-link${activeNav === s ? " active" : ""}`}
+                style={{ background: "none", border: "none", cursor: "pointer", textTransform: "capitalize" }}
+                onClick={() => handleNavTo(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          <div className="nav-cta-group desktop-only">
+            <DownloadBtn label="Resume" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }} />
+          </div>
+
+          <button className={`burger ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle Menu">
+            <div className="burger-line"></div>
+            <div className="burger-line"></div>
+            <div className="burger-line"></div>
+          </button>
+        </div>
+      </nav>
+
+      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+        <button className="mobile-close" onClick={() => setMenuOpen(false)} aria-label="Close Menu">×</button>
+        <div className="mobile-menu-links">
           {NAV_ITEMS.map(s => (
             <button
               key={s}
-              className={`nav-btn${activeNav === s ? " active" : ""}`}
+              className={`mobile-nav-link${activeNav === s ? " active" : ""}`}
               onClick={() => handleNavTo(s)}
             >
               {s}
             </button>
           ))}
-          <DownloadBtn label="Download CV" className="nav-dl" />
-          <button className="nav-cta" onClick={() => handleNavTo("contact")}>
-            Hire Me
-          </button>
+          <div style={{ marginTop: "20px" }}>
+            <DownloadBtn label="Download Resume" className="btn btn-primary" />
+          </div>
         </div>
-
-        {/* Mobile burger area */}
-        <div className="burger-wrap">
-          <DownloadBtn label="CV" className="nav-dl" />
-          <button
-            className={`burger${menuOpen ? " open" : ""}`}
-            onClick={() => setMenuOpen(o => !o)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-          >
-            <span className="burger-bar" />
-            <span className="burger-bar" />
-            <span className="burger-bar" />
-          </button>
-        </div>
-      </nav>
-
-      {/* ── Mobile full-screen menu ── */}
-      <div
-        className={`mobile-menu${menuOpen ? " open" : ""}`}
-        aria-hidden={!menuOpen}
-      >
-        {NAV_ITEMS.map((s, i) => (
-          <button
-            key={s}
-            className={`mob-nav-btn${activeNav === s ? " active" : ""}`}
-            style={{ transitionDelay: menuOpen ? `${i * 0.055}s` : "0s" }}
-            onClick={() => handleNavTo(s)}
-          >
-            {s}
-          </button>
-        ))}
-        <DownloadBtn label="Download Resume" className="mob-dl-btn" />
       </div>
     </>
   );

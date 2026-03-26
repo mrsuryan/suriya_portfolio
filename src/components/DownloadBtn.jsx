@@ -17,10 +17,6 @@ export default function DownloadBtn({ label = "Resume", className = "dl-btn" }) 
 
   return (
     <button className={className} onClick={handleDownload}>
-      <span className="dl-icon">
-        <span className="dl-arrow" />
-        <span className="dl-line"  />
-      </span>
       {label}
     </button>
   );
