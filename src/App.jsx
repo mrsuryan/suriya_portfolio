@@ -214,21 +214,12 @@ export default function App() {
           <h2 className="section-title">Featured <span className="grad-text">Projects</span></h2>
           <div className="project-grid">
             {PROJECTS.map(p => (
-              <div key={p.number} className="project-card glass" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                <div className="project-image-container" style={{ position: "relative", height: "200px", overflow: "hidden", background: "rgba(255,255,255,0.05)" }}>
-                  {p.poster ? (
-                    <img src={p.poster} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }} />
-                  ) : (
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: "3.5rem", opacity: 0.8 }}>
-                      {p.icon || "💻"}
-                    </div>
-                  )}
-                  <div className="project-overlay" />
-                </div>
-                <div className="project-content" style={{ padding: "30px", flex: 1, display: "flex", flexDirection: "column" }}>
-                  <h3 className="project-title" style={{ marginTop: 0 }}>{p.title}</h3>
-                  <p className="project-desc" style={{ flex: 1 }}>{p.desc}</p>
-                  <div className="project-tags" style={{ marginTop: "auto", marginBottom: "20px" }}>
+              <div key={p.number} className="project-card glass">
+                <div className="project-content">
+                  <div style={{ fontSize: "2.5rem", marginBottom: "15px" }}>{p.icon}</div>
+                  <h3 className="project-title">{p.title}</h3>
+                  <p className="project-desc">{p.desc}</p>
+                  <div className="project-tags">
                     {p.chips.map(c => <span key={c} className="tag">{c}</span>)}
                   </div>
                   <div className="project-links">

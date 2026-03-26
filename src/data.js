@@ -81,8 +81,8 @@ export const EDUCATION = [
 export const PROJECTS = [
   {
     number: "01",
-    poster: "/movie.png",
-    title:  "🎬 AI Movie Recommendation System",
+    icon:   "🎬",
+    title:  "AI Movie Recommendation System",
     desc:   "A sophisticated recommendation engine using TF-IDF and Cosine Similarity. Built with a Django backend and MySQL, it analyzes movie metadata to provide personalized suggestions.",
     chips:  ["Python", "Django", "Scikit-learn", "MySQL", "Machine Learning"],
     liveUrl:   "https://movie-recommendations-1-90ca.onrender.com/",
