@@ -59,13 +59,20 @@ export default function App() {
 
   useEffect(() => {
     const ids = ["home", "about", "skills", "experience", "projects", "contact"];
+    let isTicking = false;
     const onScroll = () => {
-      for (const id of [...ids].reverse()) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 150) {
-          setActiveNav(id);
-          break;
-        }
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          for (const id of [...ids].reverse()) {
+            const el = document.getElementById(id);
+            if (el && el.getBoundingClientRect().top <= 150) {
+              setActiveNav(id);
+              break;
+            }
+          }
+          isTicking = false;
+        });
+        isTicking = true;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });

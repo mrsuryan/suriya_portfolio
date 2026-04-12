@@ -13,7 +13,16 @@ export default function Navbar({ activeNav, navTo }) {
 
   // Scrolled state for backdrop
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    let isTicking = false;
+    const onScroll = () => {
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

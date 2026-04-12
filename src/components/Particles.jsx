@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 const COLORS = ["#00f5c4", "#7c3aed", "#ec4899", "#3b82f6"];
-const COUNT  = 80;
+const COUNT  = typeof window !== "undefined" && window.innerWidth < 768 ? 25 : 80;
 
 /**
  * Full-screen particle canvas.
