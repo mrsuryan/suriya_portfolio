@@ -109,7 +109,7 @@ export default function App() {
 
           <div className="hero-profile-container">
             <img 
-              src="/suriya_img.png" 
+              src="/suriya_img.webp" 
               alt={PERSONAL.name} 
               className="hero-profile-img"
               onError={(e) => { e.target.src = "/suriya_img.png" }}
