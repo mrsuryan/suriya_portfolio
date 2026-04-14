@@ -114,8 +114,7 @@ export default function App() {
               Hey, I'm <span className="grad-text">Suriya C</span><br />
               <span style={{ fontSize: "0.5em", opacity: 0.8 }}>I'm a {typed}</span>
             </h1>
-            <p className="hero-tagline">{PERSONAL.tagline}</p>
-            <p className="hero-desc">{PERSONAL.description}</p>
+            <p className="hero-tagline" style={{ fontSize: "1.3rem", fontWeight: "400", opacity: 0.9 }}>{PERSONAL.tagline}</p>
             <div className="hero-btns">
               <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
               <DownloadBtn label="Download Resume" className="btn btn-outline" />
@@ -144,7 +143,7 @@ export default function App() {
           
           <div className="about-split">
             <div className="about-text-content">
-              <p style={{ fontSize: "1.2rem", color: "var(--text-main)", marginBottom: "30px", lineHeight: "1.7" }}>{PERSONAL.description}</p>
+              <p style={{ fontSize: "1.2rem", color: "var(--text-main)", marginBottom: "30px", lineHeight: "1.7", whiteSpace: "pre-line" }}>{PERSONAL.description}</p>
               <div className="project-tags" style={{ marginBottom: "40px" }}>
                 {SOFT_SKILLS.map(s => <span key={s} className="tag">{s}</span>)}
               </div>

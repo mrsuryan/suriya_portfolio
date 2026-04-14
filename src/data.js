@@ -8,8 +8,8 @@ import Cursor from "./components/Cursor";
 export const PERSONAL = {
   name:       "Suriya C",
   logoText:   "SURIYA.DEV",
-  tagline:    "Building scalable and high-performance web applications",
-  description: "I am a dedicated Full Stack Developer with a strong focus on Python and Django. With a solid foundation in Computer Science and a passion for AI/ML, I am committed to building robust, user-centric web applications. Graduating in 2026, I am currently interning at Pydun Technology, where I am gaining hands-on experience by applying my Python and Django knowledge to professional projects.",
+  tagline:    "Crafting clean, scalable, and intelligent web solutions with Python & Django.",
+  description: "I am a Full Stack Developer specializing in Python and Django, with a strong foundation in Computer Science and a keen interest in AI/ML. I recently completed my internship at Pydun Technology, where I worked on real-world applications and strengthened my practical development skills.\nI am currently pursuing my degree (graduating in 2026) and actively looking for opportunities to apply my skills, contribute to meaningful projects, and grow as a developer.",
   badge:      "AVAILABLE FOR INTERNSHIPS & ROLES — 2026",
 
   email:    "mrsuriyan200549@gmail.com",

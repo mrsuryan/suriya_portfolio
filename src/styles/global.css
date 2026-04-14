@@ -35,8 +35,9 @@
   --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   
   /* Fonts */
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 /* ── RESET & BASE ── */
@@ -256,7 +257,7 @@ section {
 h1, h2, h3, h4, h5 {
   font-family: var(--font-heading);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .grad-text {
@@ -547,7 +548,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .hero-name {
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 7vw, 4.2rem);
   margin-bottom: 20px;
   line-height: 1;
 }
@@ -715,17 +716,18 @@ h1, h2, h3, h4, h5 {
 }
 
 .tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 16px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--glass-border);
+  color: var(--accent-cyan);
+  padding: 6px 14px;
   border-radius: 50px;
   font-size: 0.75rem;
-  color: var(--text-muted);
-  text-align: center;
-  white-space: nowrap;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .project-links {
@@ -773,6 +775,16 @@ h1, h2, h3, h4, h5 {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-main);
+}
+
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: rgba(0, 243, 255, 0.05);
+  color: var(--accent-cyan);
+  padding: 4px 10px;
+  border-radius: 2px;
+  border-left: 2px solid var(--accent-cyan);
 }
 
 /* ── PROGRESS BARS ── */
@@ -1174,7 +1186,7 @@ h1, h2, h3, h4, h5 {
   }
 
   .hero-name {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
 
   .project-grid {
@@ -1190,7 +1202,7 @@ h1, h2, h3, h4, h5 {
   }
 
   .hero-name {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
   }
 
   .hero-btns {
