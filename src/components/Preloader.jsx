@@ -12,7 +12,7 @@ export default function Preloader({ onFinish }) {
       setLoading(false);
       document.body.style.overflow = "";
       onFinish?.();
-    }, 2400);
+    }, 1500);
     
     return () => { 
       clearTimeout(tStart);
@@ -33,7 +33,7 @@ export default function Preloader({ onFinish }) {
             <span 
               key={i} 
               className="luxury-char" 
-              style={{ transitionDelay: `${0.1 + (i * 0.08)}s` }}
+              style={{ transitionDelay: `${0.05 + (i * 0.05)}s` }}
             >
               {char === " " ? "\u00A0" : char}
             </span>

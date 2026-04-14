@@ -12,7 +12,8 @@ export const PERSONAL = {
   description: "I am a dedicated Full Stack Developer with a strong focus on Python and Django. With a solid foundation in Computer Science and a passion for AI/ML, I am committed to building robust, user-centric web applications. Graduating in 2026, I am currently interning at Pydun Technology, where I am gaining hands-on experience by applying my Python and Django knowledge to professional projects.",
   badge:      "AVAILABLE FOR INTERNSHIPS & ROLES — 2026",
 
-  email:    "https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRrlzpFgCmBnFkjDZnTrNBlrgmVfFFwhBNgvQhvSQMTqWDtVmZWfkLBKnqkHZrTkkCBdtQq",
+  email:    "mrsuriyan200549@gmail.com",
+  emailLink: "https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRrlzpFgCmBnFkjDZnTrNBlrgmVfFFwhBNgvQhvSQMTqWDtVmZWfkLBKnqkHZrTkkCBdtQq",
   phone:    "+91 7904998763",
   linkedin: "https://linkedin.com/in/suriya-c-64218930b",
   github:   "https://github.com/mrsuriyan",

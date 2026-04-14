@@ -42,18 +42,32 @@ export default function Navbar({ activeNav, navTo }) {
     <>
       <nav className={`nav${scrolled ? " scrolled" : ""}${menuOpen ? " menu-open" : ""}`}>
         <div className="container nav-container">
-          <div className="nav-logo" onClick={() => handleNavTo("home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}>
-            <img src="/brand_logo.png" alt="Logo" style={{ width: "32px", height: "32px", borderRadius: "6px" }} />
+          <button 
+            type="button"
+            className="nav-logo" 
+            onClick={() => handleNavTo("home")} 
+            aria-label="Back to top"
+            style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", padding: 0 }}
+          >
+            <img 
+              src="/brand_logo.png" 
+              alt="Suriya C Logo" 
+              width="32" 
+              height="32" 
+              style={{ width: "32px", height: "32px", borderRadius: "6px" }} 
+            />
             <span>{PERSONAL.logoText}</span>
-          </div>
+          </button>
 
           <div className="nav-links desktop-only">
             {NAV_ITEMS.map(s => (
               <button
                 key={s}
+                type="button"
                 className={`nav-link${activeNav === s ? " active" : ""}`}
                 style={{ background: "none", border: "none", cursor: "pointer", textTransform: "capitalize" }}
                 onClick={() => handleNavTo(s)}
+                aria-label={`Scroll to ${s}`}
               >
                 {s}
               </button>
@@ -72,19 +86,22 @@ export default function Navbar({ activeNav, navTo }) {
         </div>
       </nav>
 
-      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+      <div className={`mobile-menu ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(false)}>
         <button className="mobile-close" onClick={() => setMenuOpen(false)} aria-label="Close Menu">×</button>
-        <div className="mobile-menu-links">
-          {NAV_ITEMS.map(s => (
+        <div className="mobile-menu-links" onClick={(e) => e.stopPropagation()}>
+          {NAV_ITEMS.map((s, i) => (
             <button
               key={s}
+              type="button"
               className={`mobile-nav-link${activeNav === s ? " active" : ""}`}
               onClick={() => handleNavTo(s)}
+              style={{ transitionDelay: `${i * 0.1}s` }}
+              aria-label={`Navigate to ${s}`}
             >
               {s}
             </button>
           ))}
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(15px)', transition: 'all 0.4s', transitionDelay: `${NAV_ITEMS.length * 0.1}s` }}>
             <DownloadBtn label="Download Resume" className="btn btn-primary" />
           </div>
         </div>

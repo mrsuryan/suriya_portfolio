@@ -127,6 +127,9 @@ export default function App() {
               src="/suriya_img.webp" 
               alt={PERSONAL.name} 
               className="hero-profile-img"
+              width="450"
+              height="450"
+              fetchpriority="high"
               onError={(e) => { e.target.src = "/suriya_img.png" }}
             />
           </div>
@@ -254,7 +257,7 @@ export default function App() {
                          <span className="btn-text-hover">Coming Soon</span>
                       </div>
                     ) : (
-                      <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>Live Demo</a>
+                      <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>Live Demo</a>
                     )}
                     
                     {p.sourceUrl.toLowerCase().includes("soon") ? (
@@ -263,7 +266,7 @@ export default function App() {
                          <span className="btn-text-hover">Coming Soon</span>
                       </div>
                     ) : (
-                      <a href={p.sourceUrl} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>View Code</a>
+                      <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>View Code</a>
                     )}
                   </div>
                 </div>
@@ -285,21 +288,21 @@ export default function App() {
               <h3>Get In Touch</h3>
               <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
               <div className="contact-items">
-                <a href={PERSONAL.email} className="contact-item">
+                <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Send me an email">
                   <div className="contact-icon"><EmailIcon /></div>
                   <div>
                     <div className="form-label" style={{ marginBottom: 0 }}>Email</div>
-                    <div className="skill-name">mrsuriyan200549@gmail.com</div>
+                    <div className="skill-name">{PERSONAL.email}</div>
                   </div>
                 </a>
-                <a href={PERSONAL.linkedin} target="_blank" rel="noreferrer" className="contact-item">
+                <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Visit my LinkedIn profile">
                   <div className="contact-icon"><LinkedInIcon /></div>
                   <div>
                     <div className="form-label" style={{ marginBottom: 0 }}>LinkedIn</div>
                     <div className="skill-name">Suriya C</div>
                   </div>
                 </a>
-                <a href={PERSONAL.whatsapp} target="_blank" rel="noreferrer" className="contact-item">
+                <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Chat with me on WhatsApp">
                   <div className="contact-icon"><WhatsAppIcon /></div>
                   <div>
                     <div className="form-label" style={{ marginBottom: 0 }}>WhatsApp</div>
@@ -347,7 +350,14 @@ export default function App() {
             <h4>Information</h4>
             <div className="footer-brand">
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <img src="/brand_logo.png" alt="Logo" style={{ width: "30px", height: "30px", borderRadius: "6px" }} />
+                <img 
+                  src="/brand_logo.png" 
+                  alt="Suriya C Logo" 
+                  width="30" 
+                  height="30" 
+                  loading="lazy"
+                  style={{ width: "30px", height: "30px", borderRadius: "6px" }} 
+                />
                 <span className="footer-logo grad-text" style={{ fontSize: "1.2rem", marginBottom: 0 }}>{PERSONAL.logoText}</span>
               </div>
               <div className="footer-contact-item">
@@ -376,19 +386,19 @@ export default function App() {
           <div className="footer-col" style={{ textAlign: "right" }}>
             <h4>Contact Me</h4>
             <div className="footer-nav" style={{ alignItems: "flex-end" }}>
-              <a href={PERSONAL.email} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+              <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Send me an email">
                 <EmailIconSm />
-                <span>mrsuriyan200549@gmail.com</span>
+                <span>{PERSONAL.email}</span>
               </a>
-              <a href={PERSONAL.whatsapp} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+              <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Chat with me on WhatsApp">
                 <WhatsAppIconSm />
                 <span>{PERSONAL.phone}</span>
               </a>
-              <a href={PERSONAL.github} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+              <a href={PERSONAL.github} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Visit my GitHub profile">
                 <GitHubIconSm />
                 <span>GitHub</span>
               </a>
-              <a href={PERSONAL.linkedin} target="_blank" rel="noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }}>
+              <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Visit my LinkedIn profile">
                 <LinkedInIconSm />
                 <span>LinkedIn</span>
               </a>

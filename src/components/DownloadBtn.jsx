@@ -16,7 +16,7 @@ export default function DownloadBtn({ label = "Resume", className = "dl-btn" }) 
   };
 
   return (
-    <button className={className} onClick={handleDownload}>
+    <button type="button" className={className} onClick={handleDownload} aria-label={`Download ${label}`}>
       {label}
     </button>
   );
