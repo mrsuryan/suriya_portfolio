@@ -27,7 +27,7 @@ export const TYPING_ROLES = [
   "Python & Django Developer",
   "AI/ML Enthusiast",
   "Frontend Enthusiast",
-  "Software Engineer 2026",
+  "Software Engineer",
 ];
 
 export const STATS = [

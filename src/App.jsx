@@ -9,6 +9,7 @@ import Navbar      from "./components/Navbar";
 import DownloadBtn from "./components/DownloadBtn";
 import SkillBar    from "./components/SkillBar";
 import TiltCard    from "./components/TiltCard";
+import ScrollToTop from "./components/ScrollToTop";
 import {
   EmailIcon, PhoneIcon, LinkedInIcon, GitHubIcon, WhatsAppIcon,
   LinkedInIconSm, GitHubIconSm, EmailIconSm, WhatsAppIconSm,
@@ -98,6 +99,7 @@ export default function App() {
         setSiteReady(true);
         setTimeout(() => window.scrollTo(0, 0), 0);
       }} />
+      <ScrollToTop />
       <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
       <Particles />
       <Cursor />
