@@ -6,7 +6,7 @@
 import Cursor from "./components/Cursor";
 
 export const PERSONAL = {
-  name:       "Suriya.C",
+  name:       "Suriya C",
   logoText:   "SURIYA.DEV",
   tagline:    "Building scalable and high-performance web applications",
   description: "I am a dedicated Full Stack Developer with a strong focus on Python and Django. With a solid foundation in Computer Science and a passion for AI/ML, I am committed to building robust, user-centric web applications. Graduating in 2026, I am currently interning at Pydun Technology, where I am gaining hands-on experience by applying my Python and Django knowledge to professional projects.",
@@ -44,9 +44,9 @@ export const PROFICIENCIES = [
   { label: "Python",          pct: 70 },
   { label: "Django",          pct: 60 },
   { label: "JavaScript",      pct: 55 },
-  { label: "SQL / MySQL",     pct: 80 },
-  { label: "HTML5 & CSS3",    pct: 85 },
-  { label: "Git & GitHub",    pct: 85 },
+  { label: "SQL / MySQL",     pct: 75 },
+  { label: "HTML5 & CSS3",    pct: 80 },
+  { label: "Git & GitHub",    pct: 70 },
   { label: "AI Integration",  pct: 50 },
 ];
 

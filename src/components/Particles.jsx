@@ -10,8 +10,13 @@ const COUNT  = typeof window !== "undefined" && window.innerWidth < 768 ? 25 : 8
  */
 export default function Particles() {
   const ref = useRef(null);
+  
+  // Do not render particles on mobile screens for maximum scroll performance
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   useEffect(() => {
+    if (isMobile) return;
+    
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");

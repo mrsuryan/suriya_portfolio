@@ -14,10 +14,11 @@ export default function useScrollReveal() {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const delay = parseFloat(entry.target.dataset.delay || 0);
-            setTimeout(() => entry.target.classList.add("in"), delay * 1000);
-          } else {
-            // Remove the 'in' class when it leaves the viewport to allow re-animating
-            entry.target.classList.remove("in");
+            setTimeout(() => {
+              entry.target.classList.add("in");
+              // Unobserve to prevent re-animating and causing scroll lag
+              observer.unobserve(entry.target);
+            }, delay * 1000);
           }
         });
       },

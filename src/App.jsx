@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./styles/global.css";
 
 // ── Components ──
+import Preloader   from "./components/Preloader";
 import Cursor      from "./components/Cursor";
 import Particles   from "./components/Particles";
 import Navbar      from "./components/Navbar";
@@ -29,6 +30,7 @@ export default function App() {
   const [activeNav, setActiveNav] = useState("home");
   const [sent, setSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [siteReady, setSiteReady] = useState(false);
   
   useScrollReveal();
 
@@ -58,6 +60,12 @@ export default function App() {
   };
 
   useEffect(() => {
+    // Force scroll to top on refresh
+    window.scrollTo(0, 0);
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     const ids = ["home", "about", "skills", "experience", "projects", "contact"];
     let isTicking = false;
     const onScroll = () => {
@@ -85,7 +93,12 @@ export default function App() {
   };
 
   return (
-    <div className="bg-dark">
+    <div className="bg-dark" style={{ overflowX: "hidden", position: "relative" }}>
+      <Preloader onFinish={() => {
+        setSiteReady(true);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+      }} />
+      <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
       <Particles />
       <Cursor />
       <Navbar activeNav={activeNav} navTo={navTo} />
@@ -130,7 +143,10 @@ export default function App() {
               <div className="project-tags" style={{ marginBottom: "40px" }}>
                 {SOFT_SKILLS.map(s => <span key={s} className="tag">{s}</span>)}
               </div>
-              <button className="btn btn-outline" onClick={() => navTo("contact")}>Let's Connect</button>
+               <div className="hero-btns" style={{ gap: "15px" }}>
+                <button className="btn btn-primary" onClick={() => navTo("contact")}>Let's Connect</button>
+                <DownloadBtn label="Download CV" className="btn btn-outline" />
+              </div>
             </div>
 
             <div className="about-metrics">
@@ -177,7 +193,7 @@ export default function App() {
           <div className="contact-container">
             <div>
               <span className="section-subtitle">04 / Experience</span>
-              <h2 className="section-title" style={{ textAlign: "left" }}>Where I've <span className="grad-text">Worked</span></h2>
+              <h2 className="section-title" style={{ textAlign: "center" }}>Where I've <span className="grad-text">Worked</span></h2>
               <div className="contact-items">
                 {EXPERIENCE.map((exp, i) => (
                   <div key={i} className="glass" style={{ padding: "30px", marginBottom: "20px" }}>
@@ -199,7 +215,7 @@ export default function App() {
             </div>
             <div>
               <span className="section-subtitle">05 / Education</span>
-              <h2 className="section-title" style={{ textAlign: "left" }}>Background</h2>
+              <h2 className="section-title" style={{ textAlign: "center" }}>Background</h2>
               <div className="contact-items">
                 {EDUCATION.map((edu, i) => (
                   <div key={i} className="glass" style={{ padding: "30px", marginBottom: "20px" }}>
@@ -348,6 +364,9 @@ export default function App() {
                   {s.charAt(0).toUpperCase() + s.slice(1)}
                 </button>
               ))}
+              <div style={{ marginTop: "10px" }}>
+                <DownloadBtn label="Download Resume" className="footer-nav-link" style={{ fontSize: "0.95rem", padding: 0 }} />
+              </div>
             </div>
           </div>
 
@@ -377,6 +396,7 @@ export default function App() {
           <p className="copyright">© {new Date().getFullYear()} {PERSONAL.name}. All Rights Reserved.</p>
         </div>
       </footer>
+      </div>{/* end site-container */}
     </div>
   );
 }
