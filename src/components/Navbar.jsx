@@ -8,16 +8,36 @@ import { NAV_ITEMS, PERSONAL } from "../data";
  * – Mobile:  animated burger → full-screen slide-in menu
  */
 export default function Navbar({ activeNav, navTo }) {
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Scrolled state for backdrop
+  // Scrolled state & Hide-on-scroll logic
   useEffect(() => {
     let isTicking = false;
     const onScroll = () => {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20);
+          const currentScrollY = window.scrollY;
+          
+          // Background solid state
+          setScrolled(currentScrollY > 20);
+
+          // Hide/Show logic (Desktop only - simplified check)
+          if (window.innerWidth > 768) {
+            // Threshold reduced to 50 for faster hiding
+            // Added currentScrollY > 10 to avoid jitter at the very top
+            if (currentScrollY > lastScrollY && currentScrollY > 50) {
+              setIsVisible(false); // Scrolling down - hide
+            } else if (lastScrollY - currentScrollY > 5) {
+              setIsVisible(true);  // Scrolling up (at least 5px) - show
+            }
+          } else {
+            setIsVisible(true);    // Always visible on mobile
+          }
+
+          setLastScrollY(currentScrollY);
           isTicking = false;
         });
         isTicking = true;
@@ -25,7 +45,7 @@ export default function Navbar({ activeNav, navTo }) {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lastScrollY]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -40,7 +60,7 @@ export default function Navbar({ activeNav, navTo }) {
 
   return (
     <>
-      <nav className={`nav${scrolled ? " scrolled" : ""}${menuOpen ? " menu-open" : ""}`}>
+      <nav className={`nav ${scrolled ? "scrolled" : ""} ${menuOpen ? "menu-open" : ""} ${!isVisible ? "nav-hidden" : ""}`}>
         <div className="container nav-container">
           <button 
             type="button"

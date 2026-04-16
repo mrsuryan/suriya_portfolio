@@ -100,10 +100,10 @@ export default function App() {
         setTimeout(() => window.scrollTo(0, 0), 0);
       }} />
       <ScrollToTop />
+      <Navbar activeNav={activeNav} navTo={navTo} />
       <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
       <Particles />
       <Cursor />
-      <Navbar activeNav={activeNav} navTo={navTo} />
 
       {/* ── HERO ── */}
       <section className="hero" id="home">

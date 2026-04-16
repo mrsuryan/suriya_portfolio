@@ -292,30 +292,59 @@ h1, h2, h3, h4, h5 {
 /* ── NAVIGATION ── */
 .nav {
   position: fixed;
-  top: 20px;
+  top: 0;
   left: 0;
   right: 0;
-  margin: 0 auto;
   z-index: 1000;
-  width: 95%;
-  max-width: 1400px;
-  padding: 12px 24px;
+  width: 100%;
+  padding: 15px 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(5, 5, 5, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
-  border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, backdrop-filter;
+  background: rgba(5, 5, 5, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: transform, background;
+}
+
+/* Desktop style (Floating Pill) */
+@media (min-width: 769px) {
+  .nav {
+    top: 20px;
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    background: rgba(5, 5, 5, 0.6);
+  }
+
+  .nav.scrolled {
+    top: 10px;
+    background: rgba(5, 5, 5, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .nav.scrolled {
-  top: 10px;
-  background: rgba(5, 5, 5, 0.95);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: rgba(5, 5, 5, 0.98);
+  padding: 12px 5%;
+  border-bottom: 1px solid var(--accent-cyan);
+}
+
+.nav.nav-hidden {
+  transform: translateY(-120%);
+  opacity: 0;
+}
+
+/* Ensure mobile navbar stays fixed and ignores hide logic */
+@media (max-width: 768px) {
+  .nav.nav-hidden {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
 }
 
 .nav-logo {
