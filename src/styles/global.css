@@ -576,26 +576,33 @@ h1, h2, h3, h4, h5 {
   50% { transform: scale(1.05); opacity: 0.1; }
 }
 
-.hero-name {
+.hero-title {
   font-size: clamp(2.5rem, 7vw, 4.2rem);
   margin-bottom: 20px;
   line-height: 1;
 }
 
-.hero-tagline {
+.hero-role {
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: var(--accent-cyan);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 20px;
   font-weight: 600;
+  display: block;
 }
 
 .hero-desc {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--text-muted);
-  max-width: 600px;
+  max-width: 650px;
   margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.accent-text {
+  color: var(--accent-cyan);
+  font-weight: 600;
 }
 
 .hero-btns {
@@ -704,8 +711,20 @@ h1, h2, h3, h4, h5 {
   height: 220px;
   overflow: hidden;
   position: relative;
-  background: var(--bg-dark);
+  background: linear-gradient(
+    90deg, 
+    rgba(255, 255, 255, 0.03) 25%, 
+    rgba(255, 255, 255, 0.08) 50%, 
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
   border-bottom: 1px solid var(--glass-border);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .project-img {

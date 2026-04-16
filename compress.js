@@ -4,7 +4,9 @@ const fs = require('fs');
 async function optimizeImages() {
   const images = [
     { in: 'public/suriya_img.png', out: 'public/suriya_img.webp', width: 800 },
-    { in: 'public/movie.png', out: 'public/movie.webp', width: 1200 }
+    { in: 'public/projects/cinemaflow.png', out: 'public/projects/cinemaflow.webp', width: 1000 },
+    { in: 'public/projects/trev.png', out: 'public/projects/trev.webp', width: 1000 },
+    { in: 'public/projects/ecommerce.png', out: 'public/projects/ecommerce.webp', width: 1000 }
   ];
 
   for (const img of images) {

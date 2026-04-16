@@ -118,11 +118,15 @@ export default function App() {
         <div className="container hero-content reveal">
           <div className="hero-text-block">
             <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px" }}>Software Engineer & Full Stack Developer</span>
-            <h1 className="hero-name">
-              Hey, I'm <span className="grad-text">Suriya C</span><br />
-              <span style={{ fontSize: "0.5em", opacity: 0.8 }}>I'm a {typed}</span>
+            <h1 className="hero-title">
+              I am <span className="grad-text">Suriya C</span><br />
+              <span className="hero-role">Fullstack & Front End Developer</span>
             </h1>
-            <p className="hero-tagline" style={{ fontSize: "1.3rem", fontWeight: "400", opacity: 0.9 }}>{PERSONAL.tagline}</p>
+            <p className="hero-desc">
+              Expertly building intelligent applications with <span className="accent-text">AI</span>, 
+              <span className="accent-text"> Python</span>, and <span className="accent-text"> Django</span>. 
+              Computer Science Engineer focused on high-performance web solutions.
+            </p>
             <div className="hero-btns">
               <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
               <DownloadBtn label="Download Resume" className="btn btn-outline" />
@@ -259,7 +263,15 @@ export default function App() {
                 style={{ cursor: "pointer" }}
               >
                 <div className="project-img-container">
-                  <img src={p.image} alt={p.title} className="project-img" loading="lazy" />
+                  <img 
+                    src={p.image} 
+                    alt={`Fullstack Project: ${p.title} built with ${p.chips.join(', ')}`} 
+                    className="project-img" 
+                    loading="lazy" 
+                    decoding="async"
+                    width="600"
+                    height="338"
+                  />
                   <div className="project-hover-hint">
                     <span className="hint-icon">🔍</span>
                     <span className="hint-text">Click to Explore Details</span>

@@ -94,7 +94,7 @@ export const PROJECTS = [
       "Dynamic search & filter capabilities for intuitive discovery"
     ],
     chips:  ["Python", "Django", "Scikit-learn", "MySQL", "Machine Learning"],
-    image:  "/projects/cinemaflow.png",
+    image:  "/projects/cinemaflow.webp",
     liveUrl:   "https://movie-recommendations-1-90ca.onrender.com/",
     sourceUrl: "https://github.com/mrsuryan/Movie-recommendations",
   },
