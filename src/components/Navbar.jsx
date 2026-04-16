@@ -26,12 +26,23 @@ export default function Navbar({ activeNav, navTo }) {
 
           // Hide/Show logic (Desktop only - simplified check)
           if (window.innerWidth > 768) {
-            // Threshold reduced to 50 for faster hiding
-            // Added currentScrollY > 10 to avoid jitter at the very top
-            if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            // Increased to 400px to cover the entire footer area
+            const isNearBottom = (currentScrollY + clientHeight) > (scrollHeight - 400);
+
+            // Always show at the top 50px
+            if (currentScrollY <= 50) {
+              setIsVisible(true);
+            }
+            // Hide very quickly (after 20px) when scrolling down
+            else if (currentScrollY > lastScrollY && currentScrollY > 20) {
               setIsVisible(false); // Scrolling down - hide
-            } else if (lastScrollY - currentScrollY > 5) {
-              setIsVisible(true);  // Scrolling up (at least 5px) - show
+            } 
+            // Only show if user scrolls up significantly (at least 100px) 
+            // AND not near the bottom of the page
+            else if (lastScrollY - currentScrollY > 100 && !isNearBottom) {
+              setIsVisible(true);  // Scrolling up - show
             }
           } else {
             setIsVisible(true);    // Always visible on mobile
