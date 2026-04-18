@@ -5,6 +5,8 @@ import "./styles/global.css";
 import Preloader   from "./components/Preloader";
 import Cursor      from "./components/Cursor";
 import Particles   from "./components/Particles";
+import CountUp     from "./components/CountUp";
+import ShootingStars from "./components/ShootingStars";
 import Navbar      from "./components/Navbar";
 import DownloadBtn from "./components/DownloadBtn";
 import SkillBar    from "./components/SkillBar";
@@ -108,10 +110,11 @@ export default function App() {
         setTimeout(() => window.scrollTo(0, 0), 0);
       }} />
       <ScrollToTop />
+      <Particles />
+      <ShootingStars />
+      <Cursor />
       <Navbar activeNav={activeNav} navTo={navTo} />
       <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
-      <Particles />
-      <Cursor />
 
       {/* ── HERO ── */}
       <section className="hero" id="home">
@@ -119,13 +122,15 @@ export default function App() {
           <div className="hero-text-block">
             <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px" }}>Software Engineer & Full Stack Developer</span>
             <h1 className="hero-title">
-              I am <span className="grad-text">Suriya C</span><br />
-              <span className="hero-role">Fullstack & Front End Developer</span>
+              I Am <span className="grad-text">Suriya C</span><br />
+              <span className="hero-role" style={{ opacity: 0.9 }}>
+                I'm a <span className="accent-text">{typed}</span>
+              </span>
             </h1>
             <p className="hero-desc">
               Expertly building intelligent applications with <span className="accent-text">AI</span>, 
               <span className="accent-text"> Python</span>, and <span className="accent-text"> Django</span>. 
-              Computer Science Engineer focused on high-performance web solutions.
+              Computer Science Engineer focused on high-performance Fullstack solutions.
             </p>
             <div className="hero-btns">
               <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
@@ -167,9 +172,11 @@ export default function App() {
 
             <div className="about-metrics">
                {STATS.filter(s => ["Projects Built", "Internship Exp", "Certifications"].includes(s.label)).map(x => (
-                <div key={x.label} className="ach-card glass" style={{ textAlign: "left", padding: "20px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div key={x.label} className="ach-card glass hover-glow" style={{ textAlign: "left", padding: "20px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span className="ach-label" style={{ fontSize: "1.1rem", color: "var(--text-main)", fontWeight: "600" }}>{x.label}</span>
-                  <span className="ach-number" style={{ fontSize: "2rem", marginBottom: 0 }}>{x.n}{x.suffix}</span>
+                  <span className="ach-number" style={{ fontSize: "2rem", marginBottom: 0 }}>
+                    <CountUp end={x.n} suffix={x.suffix} />
+                  </span>
                 </div>
               ))}
             </div>
@@ -194,7 +201,7 @@ export default function App() {
 
           <div className="skill-grid">
             {STACK_CARDS.map((c, i) => (
-              <div key={c.label} className="skill-card glass">
+              <div key={c.label} className="skill-card glass hover-glow">
                 <div className="skill-icon">{c.icon}</div>
                 <div className="skill-name">{c.label}</div>
               </div>
@@ -212,7 +219,7 @@ export default function App() {
               <h2 className="section-title" style={{ textAlign: "center" }}>Where I've <span className="grad-text">Worked</span></h2>
               <div className="contact-items">
                 {EXPERIENCE.map((exp, i) => (
-                  <div key={i} className="glass" style={{ padding: "30px", marginBottom: "20px" }}>
+                  <div key={i} className="glass hover-glow" style={{ padding: "30px", marginBottom: "20px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
                       <h3 style={{ fontSize: "1.3rem" }}>{exp.role}</h3>
                       <span className="tag" style={{ color: "var(--accent-cyan)", borderColor: "var(--accent-cyan)" }}>{exp.period}</span>
@@ -416,25 +423,25 @@ export default function App() {
           </div>
 
           {/* RIGHT: Contact Details */}
-          <div className="footer-col" style={{ textAlign: "right" }}>
+          <div className="footer-col" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
             <h4>Contact Me</h4>
-            <div className="footer-nav" style={{ alignItems: "flex-end" }}>
-              <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Send me an email">
+            <div className="footer-nav">
+              <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Send me an email">
                 <EmailIconSm />
                 <span>{PERSONAL.email}</span>
               </a>
-              <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Chat with me on WhatsApp">
+              <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Chat with me on WhatsApp">
                 <WhatsAppIconSm />
                 <span>{PERSONAL.phone}</span>
               </a>
-              <a href={PERSONAL.github} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Visit my GitHub profile">
-                <GitHubIconSm />
-                <span>GitHub</span>
-              </a>
-              <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ textDecoration: "none" }} aria-label="Visit my LinkedIn profile">
-                <LinkedInIconSm />
-                <span>LinkedIn</span>
-              </a>
+              <div className="footer-social-row" style={{ marginTop: "10px", display: "flex", gap: "15px" }}>
+                <a href={PERSONAL.github} target="_blank" rel="noopener noreferrer" className="footer-social-icon-circle" aria-label="Visit my GitHub profile">
+                  <GitHubIconSm />
+                </a>
+                <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="footer-social-icon-circle" aria-label="Visit my LinkedIn profile">
+                  <LinkedInIconSm />
+                </a>
+              </div>
             </div>
           </div>
 

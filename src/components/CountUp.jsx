@@ -1,44 +1,70 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
-/**
- * Animates a number from 0 to `end` when the element scrolls into view.
- * Uses ease-out-quart easing for a natural deceleration.
- *
- * @param {string|number} end    - target number (can be "2", "2026", etc.)
- * @param {string}        suffix - appended after the number ("+", " mo", etc.)
- */
-export default function CountUp({ end, suffix = "" }) {
-  const [value, setValue] = useState(0);
-  const ref     = useRef(null);
-  const started = useRef(false);
+const CountUp = ({ end, duration = 2000, suffix = "" }) => {
+  const targetEnd = typeof end === 'string' ? parseInt(end, 10) : end;
+  const [count, setCount] = useState(0);
+  const countRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const num = parseFloat(end);
-    if (isNaN(num)) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true;
-        const duration  = 1600;
-        const startTime = performance.now();
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
 
-        const tick = time => {
-          const progress = Math.min((time - startTime) / duration, 1);
-          const eased    = 1 - Math.pow(1 - progress, 4); // ease-out-quart
-          setValue(Math.round(eased * num));
-          if (progress < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
+    return () => {
+      if (countRef.current) {
+        observer.unobserve(countRef.current);
       }
-    }, { threshold: 0.5 });
+    };
+  }, []);
 
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [end]);
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime;
+    let animationFrame;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      
+      const easing = percentage === 1 ? 1 : 1 - Math.pow(2, -10 * percentage);
+      
+      const currentCount = Math.floor(easing * targetEnd);
+      setCount(currentCount);
+
+      if (percentage < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isVisible, targetEnd, duration]);
 
   return (
-    <span ref={ref}>
-      {isNaN(parseFloat(end)) ? end : value + suffix}
+    <span 
+      ref={countRef} 
+      style={{ 
+        display: "inline-block", 
+        minWidth: "1ch",
+        textAlign: "center" 
+      }}
+    >
+      {count || 0}{suffix}
     </span>
   );
-}
+};
+
+export default CountUp;

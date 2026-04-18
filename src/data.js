@@ -9,7 +9,7 @@ export const PERSONAL = {
   name:       "Suriya C",
   logoText:   "SURIYA.DEV",
   tagline:    "Crafting clean, scalable, and intelligent web solutions with Python & Django.",
-  description: "I am a Full Stack Developer specializing in Python and Django, with a strong foundation in Computer Science and a keen interest in AI/ML. I recently completed my internship at Pydun Technology, where I worked on real-world applications and strengthened my practical development skills.\nI am currently pursuing my degree (graduating in 2026) and actively looking for opportunities to apply my skills, contribute to meaningful projects, and grow as a developer.",
+  description: "I am an aspiring Full Stack Developer and Computer Science Engineer (Class of 2026) with a strong foundational grasp of backend and frontend technologies. My practical journey began during my internship at Pydun Technology, where I learned to apply Python and Django to solve real-world development challenges.\n\nI focus on writing clean, effective code and building a solid understanding of database management and system architecture. I am a fast learner and tech enthusiast, always looking for opportunities to contribute my skills to meaningful projects while continuously growing as a developer.",
   badge:      "AVAILABLE FOR INTERNSHIPS & ROLES — 2026",
 
   email:    "mrsuriyan200549@gmail.com",
@@ -32,9 +32,9 @@ export const TYPING_ROLES = [
 ];
 
 export const STATS = [
-  { n: "5",    suffix: "+",   label: "Projects Built" },
-  { n: "3",    suffix: " mo", label: "Internship Exp" },
-  { n: "4",    suffix: "+",   label: "Certifications" },
+  { n: 5,    suffix: "+",   label: "Projects Built" },
+  { n: 3,    suffix: "mo",  label: "Internship Exp" },
+  { n: 4,    suffix: "+",   label: "Certifications" },
 ];
 
 export const SOFT_SKILLS = [
@@ -52,12 +52,12 @@ export const PROFICIENCIES = [
 ];
 
 export const STACK_CARDS = [
-  { icon: "🐍", label: "Backend",   items: ["Python", "Django", "FastAPI", "Rest API"] },
-  { icon: "⚛️", label: "Frontend",  items: ["JavaScript (ES6+)", "HTML5", "CSS3", "Vite", "Modern UI Design"] },
-  { icon: "🗄️", label: "Database",  items: ["MySQL", "PostgreSQL", "Query Optimization"] },
-  { icon: "🔧", label: "AI Tools",     items: ["Git", "GitHub", "VS Code", "GitHub Copilot", "LLMs", "Gemini","Cursor","Antigravity"] },
-  { icon: "🤖", label: "AI / ML",   items: ["Scikit-learn", "Natural Language Processing", "LLMs"] },
-  { icon: "🎨", label: "UI / UX",   items: ["Vanilla CSS", "Responsive Design", "Figma Basics", "Animations","Stitch","Canva","Framer"] },
+  { icon: "🐍", label: "Backend Core",   items: ["Python", "Django", "FastAPI", "Rest API", "Authentication"] },
+  { icon: "⚛️", label: "Modern Frontend",  items: ["React.js", "JavaScript (ES6+)", "Vite", "Responsive UI", "Animations"] },
+  { icon: "🗄️", label: "Data Architecture",  items: ["MySQL", "PostgreSQL", "Query Optimization", "Database Design"] },
+  { icon: "🔧", label: "Dev Tools",  items: ["Git & GitHub", "GitHub Copilot", "LLMs", "Cursor / Antigravity"] },
+  { icon: "🤖", label: "Intelligence",   items: ["Scikit-learn", "NLP Basics", "LLM Integration", "Prompt Engineering"] },
+  { icon: "🎨", label: "Design System",   items: ["Vanilla CSS", "Figma", "Interaction Design", "Canva / Framer"] },
 ];
 
 export const EXPERIENCE = [

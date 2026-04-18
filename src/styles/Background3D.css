@@ -1,0 +1,80 @@
+/* ── 3D BACKGROUND LAYER ── */
+.bg-3d-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Just above standard background */
+  pointer-events: none;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.scene-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ── FLOATING CUBE ── */
+.cube-3d {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  transform-style: preserve-3d;
+  animation: rotate3D 20s linear infinite;
+  opacity: 0.4; /* Increased visibility */
+}
+
+.cube-face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.5);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+}
+
+.face-front  { transform: translateZ(50px); }
+.face-back   { transform: rotateY(180deg) translateZ(50px); }
+.face-right  { transform: rotateY(90deg) translateZ(50px); }
+.face-left   { transform: rotateY(-90deg) translateZ(50px); }
+.face-top    { transform: rotateX(90deg) translateZ(50px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+/* ── FLOATING RING (Torus Proxy) ── */
+.ring-3d {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 8px solid rgba(124, 58, 237, 0.4);
+  transform-style: preserve-3d;
+  animation: rotate3DInverse 25s linear infinite;
+  opacity: 0.35;
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+}
+
+@keyframes rotate3D {
+  0%   { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+@keyframes rotate3DInverse {
+  0%   { transform: rotateX(360deg) rotateY(360deg); }
+  100% { transform: rotateX(0deg) rotateY(0deg); }
+}
+
+/* ── POSITIONS & SIZES ── */
+.obj-1 { top: 15%; left: 10%; transform: scale(1.2); }
+.obj-2 { top: 60%; left: 85%; transform: scale(0.8); }
+.obj-3 { top: 80%; left: 20%; transform: scale(1); }
+.obj-4 { top: 25%; left: 75%; transform: scale(0.9); }
+.obj-5 { top: 45%; left: 5%;  transform: scale(0.7); }
+
+@media (max-width: 768px) {
+  .bg-3d-container { display: none; } /* Hide on mobile for performance */
+}
