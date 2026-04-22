@@ -9,6 +9,7 @@ const ShootingStars = () => {
       <div className="shooting-star star-3"></div>
       <div className="shooting-star star-4"></div>
       <div className="shooting-star star-5"></div>
+      <div className="shooting-star star-6"></div>
     </div>
   );
 };

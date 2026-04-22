@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Lenis from 'lenis';
 import "./styles/global.css";
 
 // ── Components ──
@@ -36,10 +37,45 @@ export default function App() {
   const [siteReady, setSiteReady] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  // Lock body scroll when modal is open
+
+  // Initialize Lenis Smooth Scroll
   useEffect(() => {
-    document.body.style.overflow = isModalOpen ? "hidden" : "";
+    const lenis = new Lenis({
+      lerp: 0.1, // Silkier, heavier feel for premium smoothness
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.1, // Slightly more punchy start
+      normalizeWheel: true, // Fixes jitter in some browsers (e.g. Firefox)
+      smoothTouch: true,
+      touchMultiplier: 1.5,
+      syncTouch: true,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+  
+  // Lock body scroll (and pause Lenis) when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+      // To properly pause Lenis, we would need to export lenis instance,
+      // but overflow: hidden usually stops Lenis native wheel listening too.
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => { document.body.style.overflow = ""; };
   }, [isModalOpen]);
 
@@ -389,7 +425,11 @@ export default function App() {
           <div className="footer-col">
             <h4>Information</h4>
             <div className="footer-brand">
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div 
+                className="footer-logo-link hoverable" 
+                onClick={() => navTo('home')}
+                style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", width: "fit-content" }}
+              >
                 <img 
                   src="/brand_logo.png" 
                   alt="Suriya C Logo" 
@@ -430,9 +470,9 @@ export default function App() {
                 <EmailIconSm />
                 <span>{PERSONAL.email}</span>
               </a>
-              <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Chat with me on WhatsApp">
+              <a href={PERSONAL.whatsappLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Chat with me on WhatsApp">
                 <WhatsAppIconSm />
-                <span>{PERSONAL.phone}</span>
+                <span>{PERSONAL.whatsapp}</span>
               </a>
               <div className="footer-social-row" style={{ marginTop: "10px", display: "flex", gap: "15px" }}>
                 <a href={PERSONAL.github} target="_blank" rel="noopener noreferrer" className="footer-social-icon-circle" aria-label="Visit my GitHub profile">

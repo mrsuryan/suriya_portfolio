@@ -27,7 +27,7 @@
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: blur(12px);
+  --glass-blur: blur(6px);
   
   /* Spacing & Transitions */
   --section-padding: 100px 0;
@@ -45,6 +45,38 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: auto !important;
+}
+
+/* Lenis Smooth Scroll Setup */
+html.lenis {
+  height: auto !important;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── LUXURY TYPOGRAPHY PRELOADER (Theme Matched) ── */
@@ -185,25 +217,53 @@
   transform: translateY(24px);
   pointer-events: none;
   overflow-x: hidden;
-  background: transparent; /* Allow fixed backgrounds to show through */
+  background: transparent;
   transition: opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1),
               transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  /* Improve rendering performance */
+  contain: content;
+  z-index: 1; /* Keep content in front of stars/backgrounds */
+  position: relative;
 }
 
 .site-container.is-revealed {
   opacity: 1;
   transform: translateY(0);
   pointer-events: all;
+  transform: translate3d(0, 0, 0);
 }
 
-/* Stagger Navbar slightly faster */
-.site-container.is-revealed nav {
-  animation: neat-fadein 0.7s cubic-bezier(0.19, 1, 0.22, 1) both;
+section {
+  /* Force each section onto its own GPU layer */
+  transform: translate3d(0,0,0);
+  will-change: transform;
 }
 
-/* Hero comes in with slight delay */
-.site-container.is-revealed .hero {
-  animation: neat-fadein 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.1s both;
+/* Specific Mobile Optimizations */
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: blur(4px); /* Reduced for performance */
+    -webkit-backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  .site-container * {
+    text-shadow: none !important;
+    /* Disable expensive transitions on mobile if needed */
+  }
+  
+  .glowing-text {
+    text-shadow: 0 0 4px var(--accent-glow) !important;
+  }
+
+  .cursor-aura {
+    /* Scale down or simplify the aura glow on mobile to save GPU */
+    display: none !important; 
+  }
 }
 
 @keyframes neat-fadein {

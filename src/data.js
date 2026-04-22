@@ -17,7 +17,8 @@ export const PERSONAL = {
   phone:    "+91 7904998763",
   linkedin: "https://linkedin.com/in/suriya-c-64218930b",
   github:   "https://github.com/mrsuriyan",
-  whatsapp: "https://wa.me/917904998763",
+  whatsapp: "Chat with me",
+  whatsappLink: "https://wa.me/917904998763",
   location: "Madurai, Tamil Nadu, India",
 
   resumePath: "/Suriya_Resume.pdf",
@@ -25,10 +26,9 @@ export const PERSONAL = {
 
 export const TYPING_ROLES = [
   "Full Stack Developer",
-  "Python & Django Developer",
-  "AI/ML Enthusiast",
-  "Frontend Enthusiast",
-  "Software Engineer",
+  "AI/ML Engineer",
+  "Django Expert",
+  "Python Developer",
 ];
 
 export const STATS = [

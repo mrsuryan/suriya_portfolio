@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Placed strictly behind all content */
+  z-index: -10; /* Placed strictly behind all content */
   pointer-events: none;
   overflow: hidden;
   transform: rotateZ(45deg);
@@ -59,3 +59,4 @@
 .star-3 { top: 50%; left: 10%; animation-delay: 6000ms; }
 .star-4 { top: 70%; left: 60%; animation-delay: 8500ms; }
 .star-5 { top: 20%; left: 90%; animation-delay: 11000ms; }
+.star-6 { top: 75%; left: 30%; animation-delay: 4500ms; }
