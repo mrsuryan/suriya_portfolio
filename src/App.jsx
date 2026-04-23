@@ -13,42 +13,52 @@ import DownloadBtn from "./components/DownloadBtn";
 import SkillBar    from "./components/SkillBar";
 import TiltCard    from "./components/TiltCard";
 import ScrollToTop from "./components/ScrollToTop";
+import TypingHero  from "./components/TypingHero";
 import {
   EmailIcon, PhoneIcon, LinkedInIcon, GitHubIcon, WhatsAppIcon,
   LinkedInIconSm, GitHubIconSm, EmailIconSm, WhatsAppIconSm,
 } from "./components/SvgIcons";
 
 // ── Hooks ──
-import useTyping      from "./hooks/useTyping";
 import useScrollReveal from "./hooks/useScrollReveal";
 
 // ── Data ──
 import {
-  PERSONAL, TYPING_ROLES, STATS, SOFT_SKILLS,
+  PERSONAL, STATS, SOFT_SKILLS,
   PROFICIENCIES, STACK_CARDS, EXPERIENCE, EDUCATION,
   PROJECTS, CERTIFICATIONS, NAV_ITEMS,
 } from "./data";
 
 export default function App() {
-  const typed = useTyping(TYPING_ROLES);
   const [activeNav, setActiveNav] = useState("home");
   const [sent, setSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+
+  useEffect(() => {
+    document.body.className = theme === "light" ? "light-theme" : "";
+  }, [theme]);
 
   // Initialize Lenis Smooth Scroll
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1, // Silkier, heavier feel for premium smoothness
-      duration: 1.1,
+      lerp: 0.15, // Snappier feel
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.1, // Slightly more punchy start
-      normalizeWheel: true, // Fixes jitter in some browsers (e.g. Firefox)
+      wheelMultiplier: 1.2, // More active scrolling
+      normalizeWheel: true,
       smoothTouch: true,
       touchMultiplier: 1.5,
       syncTouch: true,
@@ -149,7 +159,7 @@ export default function App() {
       <Particles />
       <ShootingStars />
       <Cursor />
-      <Navbar activeNav={activeNav} navTo={navTo} />
+      <Navbar activeNav={activeNav} navTo={navTo} theme={theme} toggleTheme={toggleTheme} />
       <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
 
       {/* ── HERO ── */}
@@ -159,9 +169,7 @@ export default function App() {
             <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px" }}>Software Engineer & Full Stack Developer</span>
             <h1 className="hero-title">
               I Am <span className="grad-text">Suriya C</span><br />
-              <span className="hero-role" style={{ opacity: 0.9 }}>
-                I'm a <span className="accent-text">{typed}</span>
-              </span>
+              <TypingHero />
             </h1>
             <p className="hero-desc">
               Expertly building intelligent applications with <span className="accent-text">AI</span>, 
@@ -175,15 +183,18 @@ export default function App() {
           </div>
 
           <div className="hero-profile-container">
-            <img 
-              src="/suriya_img.webp" 
-              alt={PERSONAL.name} 
-              className="hero-profile-img"
-              width="450"
-              height="450"
-              fetchpriority="high"
-              onError={(e) => { e.target.src = "/suriya_img.png" }}
-            />
+            <TiltCard>
+              <img 
+                src="/suriya_img.webp" 
+                alt={PERSONAL.name} 
+                className="hero-profile-img"
+                width="450"
+                height="450"
+                fetchpriority="high"
+                onError={(e) => { e.target.src = "/suriya_img.png" }}
+              />
+              <div className="hero-img-overlay"></div>
+            </TiltCard>
           </div>
         </div>
       </section>
@@ -192,9 +203,9 @@ export default function App() {
       <section id="about">
         <div className="container reveal">
           <span className="section-subtitle">01 / Foundation</span>
-          <h2 className="section-title">Who I <span className="grad-text">Am</span></h2>
+          <h2 className="section-title reveal">Who <span className="grad-text">I Am</span></h2>
           
-          <div className="about-split">
+          <div className="about-split reveal" data-delay="0.1">
             <div className="about-text-content">
               <p style={{ fontSize: "1.2rem", color: "var(--text-main)", marginBottom: "30px", lineHeight: "1.7", whiteSpace: "pre-line" }}>{PERSONAL.description}</p>
               <div className="project-tags" style={{ marginBottom: "40px" }}>
@@ -223,10 +234,9 @@ export default function App() {
       {/* ── SKILLS ── */}
       <section id="skills" className="bg-card">
         <div className="container reveal">
-          <span className="section-subtitle">02 / Expertise</span>
-          <h2 className="section-title">My Tech <span className="grad-text">Stack</span></h2>
+          <h2 className="section-title reveal">My <span className="grad-text">Tech Stack</span></h2>
           
-          <div className="contact-container" style={{ marginBottom: "60px" }}>
+          <div className="contact-container reveal" data-delay="0.2" style={{ marginBottom: "60px" }}>
             <div style={{ display: "grid", gap: "20px" }}>
               {PROFICIENCIES.slice(0, 4).map(s => <SkillBar key={s.label} {...s} />)}
             </div>
@@ -236,10 +246,9 @@ export default function App() {
           </div>
 
           <div className="skill-grid">
-            {STACK_CARDS.map((c, i) => (
-              <div key={c.label} className="skill-card glass hover-glow">
-                <div className="skill-icon">{c.icon}</div>
-                <div className="skill-name">{c.label}</div>
+            {PROFICIENCIES.map((s, i) => (
+              <div key={i} className="glass skill-card hover-glow reveal" data-delay={i * 0.05} title={s.label}>
+                <div className="skill-icon" style={{ marginBottom: 0, fontSize: "3rem" }}>{s.icon}</div>
               </div>
             ))}
           </div>
@@ -255,10 +264,10 @@ export default function App() {
               <h2 className="section-title" style={{ textAlign: "center" }}>Where I've <span className="grad-text">Worked</span></h2>
               <div className="contact-items">
                 {EXPERIENCE.map((exp, i) => (
-                  <div key={i} className="glass hover-glow" style={{ padding: "30px", marginBottom: "20px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
+                  <div key={i} className="glass exp-card hover-glow reveal" style={{ padding: "30px", marginBottom: "20px" }}>
+                    <div className="exp-header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", alignItems: "flex-start", gap: "15px" }}>
                       <h3 style={{ fontSize: "1.3rem" }}>{exp.role}</h3>
-                      <span className="tag" style={{ color: "var(--accent-cyan)", borderColor: "var(--accent-cyan)" }}>{exp.period}</span>
+                      <span className="tag" style={{ color: "var(--accent-cyan)", borderColor: "var(--accent-cyan)", whiteSpace: "nowrap" }}>{exp.period}</span>
                     </div>
                     <p style={{ color: "var(--accent-cyan)", marginBottom: "15px", fontWeight: "600" }}>{exp.company}</p>
                     <ul style={{ listStyle: "none" }}>
@@ -274,10 +283,10 @@ export default function App() {
             </div>
             <div>
               <span className="section-subtitle">05 / Education</span>
-              <h2 className="section-title" style={{ textAlign: "center" }}>Background</h2>
+              <h2 className="section-title reveal">Educational <span className="grad-text">Background</span></h2>
               <div className="contact-items">
                 {EDUCATION.map((edu, i) => (
-                  <div key={i} className="glass" style={{ padding: "30px", marginBottom: "20px" }}>
+                  <div key={i} className="glass edu-card hover-glow" style={{ padding: "30px", marginBottom: "20px" }}>
                     <h3 style={{ fontSize: "1.1rem", marginBottom: "10px" }}>{edu.degree}</h3>
                     <p style={{ color: "var(--text-muted)", marginBottom: "5px" }}>{edu.institution}</p>
                     <span className="tag">{edu.year}</span>
@@ -292,13 +301,12 @@ export default function App() {
       {/* ── PROJECTS ── */}
       <section id="projects">
         <div className="container reveal">
-          <span className="section-subtitle">03 / Portfolio</span>
           <h2 className="section-title">Featured <span className="grad-text">Projects</span></h2>
           <div className="project-grid">
-            {PROJECTS.map(p => (
+            {PROJECTS.map((p, i) => (
               <div 
-                key={p.number} 
-                className="project-card glass"
+                key={i} 
+                className="glass project-card reveal" data-delay={i * 0.1}
                 onClick={() => {
                   setSelectedProject(p);
                   setIsModalOpen(true);
@@ -357,7 +365,7 @@ export default function App() {
       <section id="contact">
         <div className="container reveal">
           <span className="section-subtitle">06 / Contact</span>
-          <h2 className="section-title">Let's <span className="grad-text">Build Something</span></h2>
+          <h2 className="section-title reveal">Get In <span className="grad-text">Touch</span></h2>
           
           <div className="contact-container">
             <div className="contact-info">
@@ -388,7 +396,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="glass" style={{ padding: "40px" }}>
+            <div className="glass contact-form-glass" style={{ padding: "40px" }}>
               {sent ? (
                 <div style={{ textAlign: "center", padding: "40px 0" }}>
                   <div style={{ fontSize: "3rem", marginBottom: "20px" }}>🚀</div>
@@ -428,7 +436,7 @@ export default function App() {
               <div 
                 className="footer-logo-link hoverable" 
                 onClick={() => navTo('home')}
-                style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", width: "fit-content" }}
+                style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }}
               >
                 <img 
                   src="/brand_logo.png" 
@@ -463,7 +471,7 @@ export default function App() {
           </div>
 
           {/* RIGHT: Contact Details */}
-          <div className="footer-col" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <div className="footer-col contact-col">
             <h4>Contact Me</h4>
             <div className="footer-nav">
               <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Send me an email">

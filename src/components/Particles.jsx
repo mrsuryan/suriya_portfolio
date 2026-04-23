@@ -15,8 +15,6 @@ export default function Particles() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   useEffect(() => {
-    if (isMobile) return;
-    
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -46,6 +44,7 @@ export default function Particles() {
 
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
+      const isLightTheme = document.body.classList.contains('light-theme');
 
       // Draw particles
       pts.forEach(p => {
@@ -60,7 +59,7 @@ export default function Particles() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle  = p.c;
-        ctx.globalAlpha = p.a;
+        ctx.globalAlpha = isLightTheme ? p.a * 0.5 : p.a * 1.2;
         ctx.fill();
       });
 
@@ -75,8 +74,8 @@ export default function Particles() {
             ctx.beginPath();
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.strokeStyle  = "#00f5c4";
-            ctx.globalAlpha  = (1 - d / 120) * 0.065;
+            ctx.strokeStyle  = isLightTheme ? "#0088cc" : "#00f5c4";
+            ctx.globalAlpha  = isLightTheme ? (1 - d / 120) * 0.04 : (1 - d / 120) * 0.065;
             ctx.lineWidth    = 0.5;
             ctx.stroke();
           }

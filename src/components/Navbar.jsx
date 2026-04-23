@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import DownloadBtn from "./DownloadBtn";
 import { NAV_ITEMS, PERSONAL } from "../data";
+import { SunIcon, MoonIcon } from "./SvgIcons";
 
 /**
  * Fixed top navigation bar.
  * – Desktop: nav links + download button + "Hire Me" CTA
  * – Mobile:  animated burger → full-screen slide-in menu
  */
-export default function Navbar({ activeNav, navTo }) {
+export default function Navbar({ activeNav, navTo, theme, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -105,15 +106,27 @@ export default function Navbar({ activeNav, navTo }) {
             ))}
           </div>
 
-          <div className="nav-cta-group desktop-only">
-            <DownloadBtn label="Resume" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }} />
-          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+            <div className="nav-cta-group">
+              <button 
+                className="theme-toggle" 
+                onClick={toggleTheme} 
+                title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+              </button>
+              <div className="desktop-only">
+                <DownloadBtn label="Resume" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }} />
+              </div>
+            </div>
 
-          <button className={`burger ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle Menu">
-            <div className="burger-line"></div>
-            <div className="burger-line"></div>
-            <div className="burger-line"></div>
-          </button>
+            <button className={`burger ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle Menu">
+              <div className="burger-line"></div>
+              <div className="burger-line"></div>
+              <div className="burger-line"></div>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -132,7 +145,7 @@ export default function Navbar({ activeNav, navTo }) {
               {s}
             </button>
           ))}
-          <div style={{ marginTop: "20px", opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(15px)', transition: 'all 0.4s', transitionDelay: `${NAV_ITEMS.length * 0.1}s` }}>
+          <div style={{ marginTop: "20px", opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(15px)', transition: 'all 0.4s', transitionDelay: `${NAV_ITEMS.length * 0.1}s`, display: "flex", flexDirection: "column", alignItems: "center", gap: "15px" }}>
             <DownloadBtn label="Download Resume" className="btn btn-primary" />
           </div>
         </div>

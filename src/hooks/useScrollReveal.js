@@ -16,13 +16,14 @@ export default function useScrollReveal() {
             const delay = parseFloat(entry.target.dataset.delay || 0);
             setTimeout(() => {
               entry.target.classList.add("in");
-              // Unobserve to prevent re-animating and causing scroll lag
-              observer.unobserve(entry.target);
             }, delay * 1000);
+          } else {
+            // Remove 'in' class when element leaves viewport so it can re-animate
+            entry.target.classList.remove("in");
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
 
     targets.forEach(el => observer.observe(el));

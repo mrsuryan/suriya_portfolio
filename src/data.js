@@ -42,13 +42,13 @@ export const SOFT_SKILLS = [
 ];
 
 export const PROFICIENCIES = [
-  { label: "Python",          pct: 70 },
-  { label: "Django",          pct: 60 },
-  { label: "JavaScript",      pct: 55 },
-  { label: "SQL / MySQL",     pct: 75 },
-  { label: "HTML5 & CSS3",    pct: 80 },
-  { label: "Git & GitHub",    pct: 70 },
-  { label: "AI Integration",  pct: 50 },
+  { label: "Python",          pct: 70, icon: "🐍" },
+  { label: "Django",          pct: 60, icon: "🎯" },
+  { label: "JavaScript",      pct: 55, icon: "📜" },
+  { label: "SQL / MySQL",     pct: 75, icon: "🗄️" },
+  { label: "HTML5 & CSS3",    pct: 80, icon: "🎨" },
+  { label: "Git & GitHub",    pct: 70, icon: "🔧" },
+  { label: "AI Integration",  pct: 50, icon: "🤖" },
 ];
 
 export const STACK_CARDS = [
@@ -112,7 +112,7 @@ export const PROJECTS = [
       "Interactive product showcases and dynamic hover states"
     ],
     chips:  ["HTML", "CSS", "JavaScript", "Responsive Design", "Animations"],
-    image:  "/projects/trev.png",
+    image:  "/projects/trev.webp",
     liveUrl:   "https://terrv.netlify.app/",
     sourceUrl: "https://github.com/mrsuryan/pro",
   },
@@ -130,7 +130,7 @@ export const PROJECTS = [
       "Modular backend architecture using Python/Django"
     ],
     chips:  ["Python", "Django", "MySQL", "Responsive Design", "Full Stack"],
-    image:  "/projects/ecommerce.png",
+    image:  "/projects/ecommerce.webp",
     liveUrl:   "comming Soon",
     sourceUrl: "Comming Soon",
   },

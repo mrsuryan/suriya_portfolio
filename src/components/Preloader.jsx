@@ -12,7 +12,7 @@ export default function Preloader({ onFinish }) {
       setLoading(false);
       document.body.style.overflow = "";
       onFinish?.();
-    }, 1500);
+    }, 800);
     
     return () => { 
       clearTimeout(tStart);
