@@ -15,6 +15,8 @@ export default function Particles() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   useEffect(() => {
+    if (isMobile) return;
+    
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -59,7 +61,7 @@ export default function Particles() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle  = p.c;
-        ctx.globalAlpha = isLightTheme ? p.a * 0.5 : p.a * 1.2;
+        ctx.globalAlpha = isLightTheme ? p.a * 0.6 : p.a;
         ctx.fill();
       });
 
