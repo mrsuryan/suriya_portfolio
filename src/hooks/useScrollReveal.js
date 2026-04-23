@@ -7,6 +7,13 @@ import { useEffect } from "react";
  */
 export default function useScrollReveal() {
   useEffect(() => {
+    // Disable reveal animations on mobile for smoother experience
+    if (window.innerWidth <= 768) {
+      const allReveals = document.querySelectorAll(".rev, .revl, .revr, .tl-node, .reveal");
+      allReveals.forEach(el => el.classList.add("in")); // Ensure all are visible
+      return;
+    }
+
     const targets = document.querySelectorAll(".rev, .revl, .revr, .tl-node, .reveal");
 
     const observer = new IntersectionObserver(
