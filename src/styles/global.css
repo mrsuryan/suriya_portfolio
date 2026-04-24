@@ -106,6 +106,10 @@ html.lenis {
   pointer-events: none;
 }
 
+body.custom-cursor-active, body.custom-cursor-active * {
+  cursor: none !important;
+}
+
 body {
   background-color: var(--bg-dark);
   color: var(--text-main);
@@ -114,12 +118,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: none !important;
-}
-
-/* Hide cursor on all clickable/interactive elements to force custom cursor */
-a, button, [role="button"], input, textarea, select, .sbar-group, .skill-card, .project-card, .glass, h1, h2, h3, h4, h5, h6, span, p, .section-title, .section-subtitle {
-  cursor: none !important;
 }
 
 
@@ -268,8 +266,6 @@ a, button, [role="button"], input, textarea, select, .sbar-group, .skill-card, .
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  /* Improve rendering performance */
-  contain: content;
   z-index: 1; /* Keep content in front of stars/backgrounds */
   position: relative;
 }
@@ -282,9 +278,8 @@ a, button, [role="button"], input, textarea, select, .sbar-group, .skill-card, .
 }
 
 section {
-  /* Optimized for performance without layering overload */
+  /* Optimized for performance */
   transform: translate3d(0,0,0);
-  contain: content; 
   position: relative;
   z-index: 1;
 }
@@ -2016,13 +2011,207 @@ body.light-theme .sbar-fill::after {
     font-size: 1.5rem;
   }
 
-  .glass {
-    padding: 15px !important;
-    backdrop-filter: none !important; /* Disabling blur for maximum performance */
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important; /* Removing shadows to reduce GPU load */
-    border: 1px solid var(--glass-border) !important;
+/* ── MOBILE BACKGROUND ELEMENTS ── */
+/* Hidden on desktop by default, shown on mobile via media query */
+.mobile-bg-container {
+  display: none; /* Hidden on desktop */
+}
+
+.f3d-wrapper {
+  display: none; /* Hidden on desktop */
+}
+
+@media (max-width: 768px) {
+  .mobile-bg-container {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none;
+    overflow: hidden;
+    background: var(--bg-dark);
   }
+
+  .f3d-wrapper {
+    display: block !important;
+    position: fixed !important;
+    top: 20%;
+    right: 10%;
+    width: 100px;
+    height: 100px;
+    perspective: 1000px;
+    z-index: 1 !important;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+/* Futuristic Cyber Grid */
+.cyber-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(var(--accent-cyan) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent-cyan) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.03;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center top;
+  height: 200%;
+}
+
+/* Subtle Scanning Line */
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 243, 255, 0.05) 50%,
+    transparent 100%
+  );
+  background-size: 100% 4px;
+  animation: scanline 10s linear infinite;
+  opacity: 0.15;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.mobile-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px); 
+  opacity: 0.35; /* Increased visibility */
+  will-change: transform;
+}
+
+.blob-cyan {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-cyan);
+  top: 10%;
+  right: -100px;
+  animation: float-mobile 20s infinite alternate ease-in-out;
+}
+
+.blob-purple {
+  width: 280px;
+  height: 280px;
+  background: var(--accent-purple);
+  bottom: 20%;
+  left: -100px;
+  animation: float-mobile 25s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float-mobile {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, 100px) scale(1.2); }
+}
+
+/* ── MOBILE 3D ELEMENTS (shape + animation) ── */
+
+.f3d-diamond {
+  position: relative;
+  width: 60px;
+  height: 100px;
+  transform-style: preserve-3d;
+  animation: rotate3d 15s infinite linear;
+}
+
+.f3d-diamond .side {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid rgba(0, 243, 255, 0.1);
+  border-top: none;
+  transform-origin: 50% 100%;
+}
+
+/* Constructing the diamond shape */
+.f3d-diamond .top { transform: rotateY(0deg) rotateX(30deg); border-bottom-color: rgba(0, 243, 255, 0.2); }
+.f3d-diamond .front { transform: rotateY(90deg) rotateX(30deg); }
+.f3d-diamond .back { transform: rotateY(180deg) rotateX(30deg); }
+.f3d-diamond .right { transform: rotateY(270deg) rotateX(30deg); }
+
+.f3d-diamond .bottom {
+  top: 50px;
+  border-bottom: none;
+  border-top: 50px solid rgba(138, 43, 226, 0.1);
+  transform: rotateY(0deg) rotateX(-30deg);
+}
+
+@keyframes rotate3d {
+  0% { transform: rotateY(0deg) rotateX(10deg); }
+  100% { transform: rotateY(360deg) rotateX(10deg); }
+}
+
+@media (max-width: 768px) {
+  /* Make ALL layers transparent so background shows through */
+  .main-wrapper {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+  
+  .site-container, .site-container.is-revealed {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+  
+  section {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  .cyber-grid {
+    opacity: 0.06;
+    background-image: 
+      linear-gradient(rgba(0, 243, 255, 0.6) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.6) 1px, transparent 1px);
+    background-size: 50px 50px;
+    height: 200%;
+  }
+
+  .scanline {
+    opacity: 0.08;
+  }
+
+  .mobile-blob {
+    opacity: 0.25;
+  }
+
+  .f3d-wrapper {
+    right: 10% !important;
+    top: 25% !important;
+    opacity: 0.5 !important;
+  }
+
+  .glass {
+    background: rgba(10, 10, 10, 0.75) !important;
+    backdrop-filter: none !important; 
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Ensure site content is above background */
+  .site-container.is-revealed {
+    position: relative;
+    z-index: 2;
+  }
+
+  .navbar {
+    z-index: 100;
+  }
+}
 
   .sbar-fill {
     transition: width 0.8s ease-out !important; /* Faster and simpler for mobile */

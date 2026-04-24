@@ -21,6 +21,10 @@ export default function Cursor() {
 
     const onMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
+      // Ensure cursor is hidden only when moving mouse on non-touch devices
+      if (!document.body.classList.contains("custom-cursor-active")) {
+        document.body.classList.add("custom-cursor-active");
+      }
     };
 
     const onOver = (e) => {
@@ -68,6 +72,15 @@ export default function Cursor() {
       document.body.classList.remove("cur-hover", "cur-clicking");
     };
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      document.body.classList.add("custom-cursor-active");
+    } else {
+      document.body.classList.remove("custom-cursor-active");
+    }
+    return () => document.body.classList.remove("custom-cursor-active");
+  }, [isMobile]);
 
   if (isMobile) return null;
 

@@ -20,6 +20,8 @@ import Footer       from "./components/sections/Footer";
 // ── Heavy Components (Lazy) ──
 const Particles     = lazy(() => import("./components/Particles"));
 const ShootingStars = lazy(() => import("./components/ShootingStars"));
+const MobileBackground = lazy(() => import("./components/MobileBackground"));
+const Floating3D = lazy(() => import("./components/Floating3D"));
 const ProjectModal  = lazy(() => import("./components/sections/ProjectModal"));
 
 // ── Hooks ──
@@ -163,7 +165,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-dark" style={{ overflowX: "hidden", position: "relative" }}>
+    <div className="bg-dark main-wrapper" style={{ overflowX: "hidden", position: "relative" }}>
       <Preloader onFinish={() => {
         setSiteReady(true);
         setTimeout(() => window.scrollTo(0, 0), 0);
@@ -173,6 +175,8 @@ export default function App() {
       <Suspense fallback={null}>
         {!isMobile && <Particles />}
         {!isMobile && <ShootingStars />}
+        <MobileBackground />
+        <Floating3D />
       </Suspense>
       
       <Cursor />
