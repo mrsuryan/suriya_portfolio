@@ -171,9 +171,8 @@ export default function App() {
       <ScrollToTop />
       
       <Suspense fallback={null}>
-        {/* Temporarily disabled for absolute performance test */}
-        {/* {!isMobile && <Particles />} */}
-        {/* {!isMobile && <ShootingStars />} */}
+        {!isMobile && <Particles />}
+        {!isMobile && <ShootingStars />}
       </Suspense>
       
       <Cursor />

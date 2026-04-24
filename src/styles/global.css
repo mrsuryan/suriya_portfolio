@@ -2017,7 +2017,19 @@ body.light-theme .sbar-fill::after {
   }
 
   .glass {
-    padding: 20px !important;
+    padding: 15px !important;
+    backdrop-filter: none !important; /* Disabling blur for maximum performance */
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important; /* Removing shadows to reduce GPU load */
+    border: 1px solid var(--glass-border) !important;
+  }
+
+  .sbar-fill {
+    transition: width 0.8s ease-out !important; /* Faster and simpler for mobile */
+  }
+
+  .skill-card {
+    padding: 15px !important;
   }
 }
 
