@@ -1,33 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
 import Lenis from 'lenis';
 import "./styles/global.css";
 
-// ── Components ──
+// ── Core Components ──
 import Preloader   from "./components/Preloader";
 import Cursor      from "./components/Cursor";
-import Particles   from "./components/Particles";
-import CountUp     from "./components/CountUp";
-import ShootingStars from "./components/ShootingStars";
 import Navbar      from "./components/Navbar";
-import DownloadBtn from "./components/DownloadBtn";
-import SkillBar    from "./components/SkillBar";
-import TiltCard    from "./components/TiltCard";
 import ScrollToTop from "./components/ScrollToTop";
-import TypingHero  from "./components/TypingHero";
-import {
-  EmailIcon, PhoneIcon, LinkedInIcon, GitHubIcon, WhatsAppIcon,
-  LinkedInIconSm, GitHubIconSm, EmailIconSm, WhatsAppIconSm,
-} from "./components/SvgIcons";
+
+// ── Sections (Non-Lazy for Stability) ──
+import Hero         from "./components/sections/Hero";
+import About        from "./components/sections/About";
+import Skills       from "./components/sections/Skills";
+import Experience   from "./components/sections/Experience";
+import Projects     from "./components/sections/Projects";
+import Contact      from "./components/sections/Contact";
+import Footer       from "./components/sections/Footer";
+
+// ── Heavy Components (Lazy) ──
+const Particles     = lazy(() => import("./components/Particles"));
+const ShootingStars = lazy(() => import("./components/ShootingStars"));
+const ProjectModal  = lazy(() => import("./components/sections/ProjectModal"));
 
 // ── Hooks ──
 import useScrollReveal from "./hooks/useScrollReveal";
-
-// ── Data ──
-import {
-  PERSONAL, STATS, SOFT_SKILLS,
-  PROFICIENCIES, STACK_CARDS, EXPERIENCE, EDUCATION,
-  PROJECTS, CERTIFICATIONS, NAV_ITEMS,
-} from "./data";
 
 export default function App() {
   const [activeNav, setActiveNav] = useState("home");
@@ -37,33 +33,50 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [isMobile, setIsMobile] = useState(false);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const next = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", next);
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     document.body.className = theme === "light" ? "light-theme" : "";
+    document.documentElement.style.scrollBehavior = "smooth";
   }, [theme]);
-
-  // Initialize Lenis Smooth Scroll
+  
   useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const lenis = new Lenis({
-      lerp: 0.15, // Snappier feel
-      duration: 0.9,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.2, // More active scrolling
-      normalizeWheel: true,
-      smoothTouch: true,
-      touchMultiplier: 1.5,
-      syncTouch: true,
-      infinite: false,
+      wheelMultiplier: 0.9, // Slightly reduced for better control
     });
+
+    window.lenis = lenis;
 
     function raf(time) {
       lenis.raf(time);
@@ -74,24 +87,13 @@ export default function App() {
 
     return () => {
       lenis.destroy();
+      window.lenis = null;
     };
-  }, []);
-  
-  // Lock body scroll (and pause Lenis) when modal is open
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      // To properly pause Lenis, we would need to export lenis instance,
-      // but overflow: hidden usually stops Lenis native wheel listening too.
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [isModalOpen]);
+  }, [isMobile]);
 
   useScrollReveal();
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = useCallback(async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData(event.target);
@@ -114,40 +116,51 @@ export default function App() {
       alert("Network error. Please try again.");
     }
     setIsSubmitting(false);
-  };
+  }, []);
+
+  const navTo = useCallback((id) => {
+    setActiveNav(id);
+    if (window.lenis) {
+      window.lenis.scrollTo(`#${id}`, { offset: -80, duration: 1.5 });
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    // Force scroll to top on refresh
     window.scrollTo(0, 0);
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
     const ids = ["home", "about", "skills", "experience", "projects", "contact"];
-    let isTicking = false;
-    const onScroll = () => {
-      if (!isTicking) {
-        window.requestAnimationFrame(() => {
-          for (const id of [...ids].reverse()) {
-            const el = document.getElementById(id);
-            if (el && el.getBoundingClientRect().top <= 150) {
-              setActiveNav(id);
-              break;
-            }
-          }
-          isTicking = false;
-        });
-        isTicking = true;
-      }
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px', // More precise for section detection
+      threshold: 0
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
-  const navTo = id => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setActiveNav(id);
-  };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveNav(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="bg-dark" style={{ overflowX: "hidden", position: "relative" }}>
@@ -156,410 +169,33 @@ export default function App() {
         setTimeout(() => window.scrollTo(0, 0), 0);
       }} />
       <ScrollToTop />
-      <Particles />
-      <ShootingStars />
+      
+      <Suspense fallback={null}>
+        {/* Temporarily disabled for absolute performance test */}
+        {/* {!isMobile && <Particles />} */}
+        {/* {!isMobile && <ShootingStars />} */}
+      </Suspense>
+      
       <Cursor />
       <Navbar activeNav={activeNav} navTo={navTo} theme={theme} toggleTheme={toggleTheme} />
+      
       <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
+        <Hero navTo={navTo} />
+        <About navTo={navTo} />
+        <Skills />
+        <Experience />
+        <Projects setSelectedProject={setSelectedProject} setIsModalOpen={setIsModalOpen} />
+        <Contact sent={sent} isSubmitting={isSubmitting} handleFormSubmit={handleFormSubmit} />
+        <Footer navTo={navTo} />
+      </div>
 
-      {/* ── HERO ── */}
-      <section className="hero" id="home">
-        <div className="container hero-content reveal">
-          <div className="hero-text-block">
-            <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px" }}>Software Engineer & Full Stack Developer</span>
-            <h1 className="hero-title">
-              I Am <span className="grad-text">Suriya C</span><br />
-              <TypingHero />
-            </h1>
-            <p className="hero-desc">
-              Expertly building intelligent applications with <span className="accent-text">AI</span>, 
-              <span className="accent-text"> Python</span>, and <span className="accent-text"> Django</span>. 
-              Computer Science Engineer focused on high-performance Fullstack solutions.
-            </p>
-            <div className="hero-btns">
-              <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
-              <DownloadBtn label="Download Resume" className="btn btn-outline" />
-            </div>
-          </div>
-
-          <div className="hero-profile-container">
-            <TiltCard>
-              <img 
-                src="/suriya_img.webp" 
-                alt={PERSONAL.name} 
-                className="hero-profile-img"
-                width="450"
-                height="450"
-                fetchpriority="high"
-                onError={(e) => { e.target.src = "/suriya_img.png" }}
-              />
-              <div className="hero-img-overlay"></div>
-            </TiltCard>
-          </div>
-        </div>
-      </section>
-
-      {/* ── ABOUT ── */}
-      <section id="about">
-        <div className="container reveal">
-          <span className="section-subtitle">01 / Foundation</span>
-          <h2 className="section-title reveal">Who <span className="grad-text">I Am</span></h2>
-          
-          <div className="about-split reveal" data-delay="0.1">
-            <div className="about-text-content">
-              <p style={{ fontSize: "1.2rem", color: "var(--text-main)", marginBottom: "30px", lineHeight: "1.7", whiteSpace: "pre-line" }}>{PERSONAL.description}</p>
-              <div className="project-tags" style={{ marginBottom: "40px" }}>
-                {SOFT_SKILLS.map(s => <span key={s} className="tag">{s}</span>)}
-              </div>
-               <div className="hero-btns" style={{ gap: "15px" }}>
-                <button className="btn btn-primary" onClick={() => navTo("contact")}>Let's Connect</button>
-                <DownloadBtn label="Download CV" className="btn btn-outline" />
-              </div>
-            </div>
-
-            <div className="about-metrics">
-               {STATS.filter(s => ["Projects Built", "Internship Exp", "Certifications"].includes(s.label)).map(x => (
-                <div key={x.label} className="ach-card glass hover-glow" style={{ textAlign: "left", padding: "20px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span className="ach-label" style={{ fontSize: "1.1rem", color: "var(--text-main)", fontWeight: "600" }}>{x.label}</span>
-                  <span className="ach-number" style={{ fontSize: "2rem", marginBottom: 0 }}>
-                    <CountUp end={x.n} suffix={x.suffix} />
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SKILLS ── */}
-      <section id="skills" className="bg-card">
-        <div className="container reveal">
-          <h2 className="section-title reveal">My <span className="grad-text">Tech Stack</span></h2>
-          
-          <div className="contact-container reveal" data-delay="0.2" style={{ marginBottom: "60px" }}>
-            <div style={{ display: "grid", gap: "20px" }}>
-              {PROFICIENCIES.slice(0, 4).map(s => <SkillBar key={s.label} {...s} />)}
-            </div>
-            <div style={{ display: "grid", gap: "20px" }}>
-              {PROFICIENCIES.slice(4).map(s => <SkillBar key={s.label} {...s} />)}
-            </div>
-          </div>
-
-          <div className="skill-grid">
-            {PROFICIENCIES.map((s, i) => (
-              <div key={i} className="glass skill-card hover-glow reveal" data-delay={i * 0.05} title={s.label}>
-                <div className="skill-icon" style={{ marginBottom: 0, fontSize: "3rem" }}>{s.icon}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── EXPERIENCE & EDUCATION ── */}
-      <section id="experience" className="bg-card">
-        <div className="container reveal">
-          <div className="contact-container">
-            <div>
-              <span className="section-subtitle">04 / Experience</span>
-              <h2 className="section-title" style={{ textAlign: "center" }}>Where I've <span className="grad-text">Worked</span></h2>
-              <div className="contact-items">
-                {EXPERIENCE.map((exp, i) => (
-                  <div key={i} className="glass exp-card hover-glow reveal" style={{ padding: "30px", marginBottom: "20px" }}>
-                    <div className="exp-header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", alignItems: "flex-start", gap: "15px" }}>
-                      <h3 style={{ fontSize: "1.3rem" }}>{exp.role}</h3>
-                      <span className="tag" style={{ color: "var(--accent-cyan)", borderColor: "var(--accent-cyan)", whiteSpace: "nowrap" }}>{exp.period}</span>
-                    </div>
-                    <p style={{ color: "var(--accent-cyan)", marginBottom: "15px", fontWeight: "600" }}>{exp.company}</p>
-                    <ul style={{ listStyle: "none" }}>
-                      {exp.bullets.map((b, j) => (
-                        <li key={j} style={{ color: "var(--text-muted)", marginBottom: "10px", paddingLeft: "20px", position: "relative" }}>
-                          <span style={{ position: "absolute", left: 0, color: "var(--accent-cyan)" }}>▹</span> {b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <span className="section-subtitle">05 / Education</span>
-              <h2 className="section-title reveal">Educational <span className="grad-text">Background</span></h2>
-              <div className="contact-items">
-                {EDUCATION.map((edu, i) => (
-                  <div key={i} className="glass edu-card hover-glow" style={{ padding: "30px", marginBottom: "20px" }}>
-                    <h3 style={{ fontSize: "1.1rem", marginBottom: "10px" }}>{edu.degree}</h3>
-                    <p style={{ color: "var(--text-muted)", marginBottom: "5px" }}>{edu.institution}</p>
-                    <span className="tag">{edu.year}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── PROJECTS ── */}
-      <section id="projects">
-        <div className="container reveal">
-          <h2 className="section-title">Featured <span className="grad-text">Projects</span></h2>
-          <div className="project-grid">
-            {PROJECTS.map((p, i) => (
-              <div 
-                key={i} 
-                className="glass project-card reveal" data-delay={i * 0.1}
-                onClick={() => {
-                  setSelectedProject(p);
-                  setIsModalOpen(true);
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="project-img-container">
-                  <img 
-                    src={p.image} 
-                    alt={`Fullstack Project: ${p.title} built with ${p.chips.join(', ')}`} 
-                    className="project-img" 
-                    loading="lazy" 
-                    decoding="async"
-                    width="600"
-                    height="338"
-                  />
-                  <div className="project-hover-hint">
-                    <span className="hint-icon">🔍</span>
-                    <span className="hint-text">Click to Explore Details</span>
-                  </div>
-                </div>
-                <div className="project-content">
-                  <h3 className="project-title">{p.title}</h3>
-                  <p className="project-desc">{p.desc}</p>
-                  <div className="project-tags">
-                    {p.chips.map(c => <span key={c} className="tag">{c}</span>)}
-                  </div>
-                  <div className="project-links" onClick={e => e.stopPropagation()}>
-                    {p.liveUrl.toLowerCase().includes("soon") ? (
-                      <div className="btn btn-outline btn-coming-soon" style={{ padding: "8px 16px", fontSize: "0.8rem", cursor: "default" }}>
-                         <span className="btn-text-main">Live Demo</span>
-                         <span className="btn-text-hover">Coming Soon</span>
-                      </div>
-                    ) : (
-                      <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>Live Demo</a>
-                    )}
-                    
-                    {p.sourceUrl.toLowerCase().includes("soon") ? (
-                      <div className="btn btn-outline btn-coming-soon" style={{ padding: "8px 16px", fontSize: "0.8rem", cursor: "default" }}>
-                         <span className="btn-text-main">View Code</span>
-                         <span className="btn-text-hover">Coming Soon</span>
-                      </div>
-                    ) : (
-                      <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }}>View Code</a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* ── CONTACT ── */}
-      <section id="contact">
-        <div className="container reveal">
-          <span className="section-subtitle">06 / Contact</span>
-          <h2 className="section-title reveal">Get In <span className="grad-text">Touch</span></h2>
-          
-          <div className="contact-container">
-            <div className="contact-info">
-              <h3>Get In Touch</h3>
-              <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
-              <div className="contact-items">
-                <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Send me an email">
-                  <div className="contact-icon"><EmailIcon /></div>
-                  <div>
-                    <div className="form-label" style={{ marginBottom: 0 }}>Email</div>
-                    <div className="skill-name">{PERSONAL.email}</div>
-                  </div>
-                </a>
-                <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Visit my LinkedIn profile">
-                  <div className="contact-icon"><LinkedInIcon /></div>
-                  <div>
-                    <div className="form-label" style={{ marginBottom: 0 }}>LinkedIn</div>
-                    <div className="skill-name">Suriya C</div>
-                  </div>
-                </a>
-                <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Chat with me on WhatsApp">
-                  <div className="contact-icon"><WhatsAppIcon /></div>
-                  <div>
-                    <div className="form-label" style={{ marginBottom: 0 }}>WhatsApp</div>
-                    <div className="skill-name">Chat with Me</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div className="glass contact-form-glass" style={{ padding: "40px" }}>
-              {sent ? (
-                <div style={{ textAlign: "center", padding: "40px 0" }}>
-                  <div style={{ fontSize: "3rem", marginBottom: "20px" }}>🚀</div>
-                  <h3>Message Sent!</h3>
-                  <p>Thanks for reaching out. I'll get back to you shortly.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleFormSubmit}>
-                  <div className="form-group">
-                    <label className="form-label">Name</label>
-                    <input className="form-input" name="name" required placeholder="John Doe" />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Email</label>
-                    <input className="form-input" type="email" name="email" required placeholder="john@example.com" />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Message</label>
-                    <textarea className="form-textarea" name="message" required placeholder="How can I help you?" />
-                  </div>
-                  <button type="submit" className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isSubmitting}>
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="footer">
-        <div className="container footer-grid">
-          {/* LEFT: Brand & Location */}
-          <div className="footer-col">
-            <h4>Information</h4>
-            <div className="footer-brand">
-              <div 
-                className="footer-logo-link hoverable" 
-                onClick={() => navTo('home')}
-                style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }}
-              >
-                <img 
-                  src="/brand_logo.png" 
-                  alt="Suriya C Logo" 
-                  width="30" 
-                  height="30" 
-                  loading="lazy"
-                  style={{ width: "30px", height: "30px", borderRadius: "6px" }} 
-                />
-                <span className="footer-logo grad-text" style={{ fontSize: "1.2rem", marginBottom: 0 }}>{PERSONAL.logoText}</span>
-              </div>
-              <div className="footer-contact-item">
-                <span>📍 {PERSONAL.location}</span>
-              </div>
-              <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>{PERSONAL.tagline}</p>
-            </div>
-          </div>
-
-          {/* CENTER: Navigation */}
-          <div className="footer-col" style={{ textAlign: "center" }}>
-            <h4>Quick Links</h4>
-            <div className="footer-nav" style={{ alignItems: "center" }}>
-              {NAV_ITEMS.map(s => (
-                <button key={s} className="footer-nav-link" onClick={() => navTo(s)}>
-                  {s.charAt(0).toUpperCase() + s.slice(1)}
-                </button>
-              ))}
-              <div style={{ marginTop: "10px" }}>
-                <DownloadBtn label="Download Resume" className="footer-nav-link" style={{ fontSize: "0.95rem", padding: 0 }} />
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: Contact Details */}
-          <div className="footer-col contact-col">
-            <h4>Contact Me</h4>
-            <div className="footer-nav">
-              <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Send me an email">
-                <EmailIconSm />
-                <span>{PERSONAL.email}</span>
-              </a>
-              <a href={PERSONAL.whatsappLink} target="_blank" rel="noopener noreferrer" className="footer-contact-item" aria-label="Chat with me on WhatsApp">
-                <WhatsAppIconSm />
-                <span>{PERSONAL.whatsapp}</span>
-              </a>
-              <div className="footer-social-row" style={{ marginTop: "10px", display: "flex", gap: "15px" }}>
-                <a href={PERSONAL.github} target="_blank" rel="noopener noreferrer" className="footer-social-icon-circle" aria-label="Visit my GitHub profile">
-                  <GitHubIconSm />
-                </a>
-                <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="footer-social-icon-circle" aria-label="Visit my LinkedIn profile">
-                  <LinkedInIconSm />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <p className="copyright">© {new Date().getFullYear()} {PERSONAL.name}. All Rights Reserved.</p>
-        </div>
-      </footer>
-      </div>{/* end site-container */}
-
-      {/* ── PROJECT MODAL ── */}
-      {selectedProject && (
-        <div className={`modal-overlay ${isModalOpen ? "active" : ""}`} onClick={() => setIsModalOpen(false)}>
-          <div className="modal-content glass" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setIsModalOpen(false)}>&times;</button>
-            
-            <div className="modal-body scroll-custom">
-              <div className="modal-img-container">
-                <img src={selectedProject.image} alt={selectedProject.title} />
-              </div>
-              
-              <div className="modal-info">
-                <div className="modal-header">
-                  <div className="modal-icon">{selectedProject.icon}</div>
-                  <h2 className="modal-title">{selectedProject.title}</h2>
-                </div>
-                
-                <p className="modal-desc">{selectedProject.detailedDesc}</p>
-                
-                <div className="modal-section">
-                  <h3>Key Features</h3>
-                  <ul className="modal-features">
-                    {selectedProject.features.map((f, i) => (
-                      <li key={i}>
-                        <span className="dot"></span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div className="modal-section">
-                  <h3>Technologies Used</h3>
-                  <div className="project-tags">
-                    {selectedProject.chips.map(c => <span key={c} className="tag">{c}</span>)}
-                  </div>
-                </div>
-
-                <div className="modal-footer project-links">
-                  {selectedProject.liveUrl.toLowerCase().includes("soon") ? (
-                    <div className="btn btn-outline btn-coming-soon" style={{ padding: "10px 24px", fontSize: "0.9rem", cursor: "default" }}>
-                       <span className="btn-text-main">Live Demo</span>
-                       <span className="btn-text-hover">Coming Soon</span>
-                    </div>
-                  ) : (
-                    <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Live Demo</a>
-                  )}
-                  
-                  {selectedProject.sourceUrl.toLowerCase().includes("soon") ? (
-                    <div className="btn btn-outline btn-coming-soon" style={{ padding: "10px 24px", fontSize: "0.9rem", cursor: "default" }}>
-                       <span className="btn-text-main">View Code</span>
-                       <span className="btn-text-hover">Coming Soon</span>
-                    </div>
-                  ) : (
-                    <a href={selectedProject.sourceUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">View Code</a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Suspense fallback={null}>
+        <ProjectModal 
+          selectedProject={selectedProject} 
+          isModalOpen={isModalOpen} 
+          setIsModalOpen={setIsModalOpen} 
+        />
+      </Suspense>
     </div>
   );
 }

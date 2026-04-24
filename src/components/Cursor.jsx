@@ -24,7 +24,7 @@ export default function Cursor() {
     };
 
     const onOver = (e) => {
-      if (e.target.closest("button, a, .hoverable, .project-card, .skill-card, .ach-card, .contact-btn, .glass, .section-title, .exp-card, .edu-card, .nav-link")) {
+      if (e.target.closest("button, a, .hoverable, .project-card, .skill-card, .ach-card, .contact-btn, .glass, .section-title, .exp-card, .edu-card, .nav-link, .sbar-group")) {
         document.body.classList.add("cur-hover");
       } else {
         document.body.classList.remove("cur-hover");
