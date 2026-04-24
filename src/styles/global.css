@@ -115,9 +115,18 @@ body {
   color: var(--text-main);
   font-family: var(--font-body);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure no elements leak out on small screens */
+* {
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
 
@@ -489,6 +498,12 @@ h1, h2, h3, h4, h5 {
   will-change: transform, background;
 }
 
+@media (max-width: 480px) {
+  .nav {
+    padding: 10px 15px;
+  }
+}
+
 body.light-theme .nav {
   background: rgba(255, 255, 255, 0.4);
 }
@@ -543,6 +558,32 @@ body.light-theme .nav {
   color: var(--accent-cyan);
   text-decoration: none;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-text {
+  transition: font-size 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .nav-logo {
+    gap: 5px !important;
+  }
+  .logo-text {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo-text {
+    font-size: 0.9rem;
+    letter-spacing: -0.5px;
+  }
+  .nav {
+    padding: 10px 10px;
+  }
+  .nav-cta-group {
+    gap: 8px !important;
+  }
 }
 
 .nav-logo:hover {
@@ -1099,7 +1140,7 @@ h2.section-title:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease-in;
 }
 
 .project-card:hover .project-img {
@@ -1855,7 +1896,9 @@ body.light-theme .sbar-fill::after {
 @media (max-width: 992px) {
   .contact-container {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;
+    width: 100%;
+    margin: 0;
   }
 
   .about-split {
@@ -1938,18 +1981,45 @@ body.light-theme .sbar-fill::after {
   }
 
   .section-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     white-space: normal;
-    padding: 10px 20px;
-    margin-bottom: 40px;
+    padding: 0 10px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .contact-container {
+    padding: 0;
+    gap: 25px;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden;
   }
 
   .exp-card, .edu-card {
-    padding: 20px !important;
+    padding: 15px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 20px 0 !important;
+    box-sizing: border-box !important;
   }
   
-  .contact-container {
-    padding: 0 10px;
+  .exp-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  
+  .exp-header .tag {
+    white-space: normal !important;
+    display: inline-block !important;
+    width: auto;
+    font-size: 0.7rem;
+    padding: 4px 10px;
   }
 
   .project-grid {
@@ -1978,7 +2048,12 @@ body.light-theme .sbar-fill::after {
   }
 
   .hero-name {
-    font-size: 2.4rem;
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  .hero-text-block p {
+    font-size: 0.95rem;
   }
 
   .hero-btns {

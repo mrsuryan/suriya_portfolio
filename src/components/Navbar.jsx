@@ -88,7 +88,7 @@ export default function Navbar({ activeNav, navTo, theme, toggleTheme }) {
               height="32" 
               style={{ width: "32px", height: "32px", borderRadius: "6px" }} 
             />
-            <span>{PERSONAL.logoText}</span>
+            <span className="logo-text">{PERSONAL.logoText}</span>
           </button>
 
           <div className="nav-links desktop-only">
