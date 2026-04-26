@@ -2481,6 +2481,48 @@ body.light-theme .contact-item:hover {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
     background: #ffffff !important;
   }
+
+  /* DEEP OPTIMIZATION for Projects on Mobile */
+  .project-grid {
+    grid-template-columns: 1fr !important; /* Force single column for stability */
+    gap: 20px !important;
+    margin-top: 30px !important;
+  }
+
+  .project-card {
+    will-change: auto !important; /* Prevent excessive memory usage */
+    transform: none !important; /* No transforms during scroll */
+    background: var(--bg-card) !important;
+    backdrop-filter: none !important;
+  }
+
+  .project-img-container {
+    height: 200px !important; /* Fixed height for faster layout */
+    background: #111 !important;
+    animation: none !important;
+  }
+
+  .project-img {
+    transition: none !important; /* No transitions to save CPU */
+    transform: none !important;
+    will-change: auto !important;
+    image-rendering: -webkit-optimize-contrast; /* Faster rendering */
+  }
+
+  /* Disable all hover effects on project cards for mobile to keep it lag-free */
+  .project-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--glass-border) !important;
+  }
+
+  .project-card:hover .project-img {
+    transform: none !important;
+  }
+
+  .project-hover-hint {
+    display: none !important; /* Hints are not needed on mobile touch */
+  }
 }
 
 /* ── SCROLL TO TOP ── */
