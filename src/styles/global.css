@@ -329,9 +329,7 @@ section {
 }
 
 
-html, body, a, button, input, textarea, [role="button"], .btn, .project-card, .skill-card, .ach-card, .nav-link, .contact-item {
-  cursor: none !important;
-}
+/* Standard cursor behavior for non-custom states */
 
 body {
   background-color: var(--bg-dark);
@@ -2415,20 +2413,59 @@ body.light-theme .contact-item:hover {
     100% { transform: translateY(100%); }
   }
 
-  /* Fix Gray Card Contrast */
+  /* Fix Mobile Contrast - Theme Aware */
   .glass {
-    background: rgba(5, 5, 5, 0.9) !important; /* Darker, more solid black */
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--glass-border) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
   }
 
-  .glass * {
-    color: #ffffff !important; /* Force white text for better contrast */
+  /* Ensure text is always visible based on theme */
+  .glass *, .hero-desc, .section-subtitle, .text-muted, .skill-name {
+    color: var(--text-muted) !important;
   }
 
-  .text-muted, .section-subtitle, .hero-desc, .project-desc, .skill-name {
-    color: rgba(255, 255, 255, 0.8) !important; /* Brighter muted text */
+  .glass h3, .glass h2, .hero-title, .section-title {
+    color: var(--text-main) !important;
+  }
+
+  /* Specific fix for hero description in light theme */
+  body.light-theme .hero-desc {
+    color: #374151 !important; /* Dark gray for visibility */
+  }
+
+  body.light-theme .glass {
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  body.light-theme .glass * {
+    color: #1f2937 !important; /* Dark text inside cards */
+  }
+
+  body.light-theme .glass .tag {
+    background: rgba(0, 136, 204, 0.1) !important;
+    color: #0088cc !important;
+    border-color: #0088cc !important;
+  }
+
+  /* Interactive Hover/Active effects for Mobile Cards */
+  .glass:hover, .glass:active, 
+  .contact-item:hover, .contact-item:active,
+  .project-card:hover, .project-card:active {
+    transform: translateY(-8px) scale(1.02) !important;
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 243, 255, 0.2) !important;
+    z-index: 10;
+  }
+
+  body.light-theme .glass:hover, body.light-theme .glass:active,
+  body.light-theme .contact-item:hover, body.light-theme .contact-item:active {
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+    background: #ffffff !important;
   }
 }
 
