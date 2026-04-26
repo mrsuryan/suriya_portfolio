@@ -165,7 +165,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-dark main-wrapper" style={{ overflowX: "hidden", position: "relative" }}>
+    <div className="main-wrapper" style={{ overflowX: "hidden", position: "relative", background: "transparent", zIndex: 1 }}>
       <Preloader onFinish={() => {
         setSiteReady(true);
         setTimeout(() => window.scrollTo(0, 0), 0);
@@ -173,10 +173,8 @@ export default function App() {
       <ScrollToTop />
       
       <Suspense fallback={null}>
-        {!isMobile && <Particles />}
         {!isMobile && <ShootingStars />}
         <MobileBackground />
-        <Floating3D />
       </Suspense>
       
       <Cursor />
