@@ -51,7 +51,7 @@ export default function Cursor() {
       }
 
       // 2. Ring follows with lerp delay (Elastic feel)
-      const lerpFactor = 0.15;
+      const lerpFactor = 0.35; // Increased from 0.15 for higher sensitivity
       ring.current.x += (mouse.current.x - ring.current.x) * lerpFactor;
       ring.current.y += (mouse.current.y - ring.current.y) * lerpFactor;
 
