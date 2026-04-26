@@ -2413,13 +2413,27 @@ body.light-theme .contact-item:hover {
     100% { transform: translateY(100%); }
   }
 
-  /* Fix Mobile Contrast - Theme Aware */
+  /* PERFORMANCE OPTIMIZED - No expensive blur on mobile */
   .glass {
     background: var(--bg-card) !important;
     border: 1px solid var(--glass-border) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: none !important; /* Removed blur for 60fps scrolling */
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    will-change: transform; /* Hint to browser for faster rendering */
+    transform: translate3d(0,0,0); /* Hardware acceleration */
+  }
+
+  /* Optimize Background for performance */
+  .mobile-bg-container, .cyber-grid, .scanline {
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* Scanline optimization */
+  .scanline {
+    animation-duration: 15s !important; /* Slower = less CPU */
+    opacity: 0.1 !important;
   }
 
   /* Ensure text is always visible based on theme */
