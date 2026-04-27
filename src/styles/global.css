@@ -3088,13 +3088,13 @@ body.light-theme .contact-item:hover {
     border-radius: 24px; /* Keep rounded corners */
     max-width: 100%;
     margin: auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Lighter shadow */
+    box-shadow: none !important; /* Disable heavy shadows on mobile */
   }
 
   .modal-overlay {
-    backdrop-filter: none !important; /* Disable blur entirely on small screens for max FPS */
-    -webkit-backdrop-filter: none !important;
-    background: rgba(5, 5, 5, 0.95); /* More opaque background to compensate for no blur */
+    backdrop-filter: blur(10px) !important; 
+    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(5, 5, 5, 0.8) !important;
   }
   
   .modal-visuals {

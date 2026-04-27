@@ -173,14 +173,21 @@ export default function App() {
       <ScrollToTop />
       
       <Suspense fallback={null}>
-        {!isMobile && <ShootingStars />}
-        <MobileBackground />
+        {!isMobile && !isModalOpen && <ShootingStars />}
+        {!isModalOpen && <MobileBackground />}
       </Suspense>
       
       <Cursor />
       <Navbar activeNav={activeNav} navTo={navTo} theme={theme} toggleTheme={toggleTheme} />
       
-      <div className={`site-container ${siteReady ? "is-revealed" : ""}`} style={{ overflowX: "hidden" }}>
+      <div 
+        className={`site-container ${siteReady ? "is-revealed" : ""}`} 
+        style={{ 
+          overflowX: "hidden", 
+          visibility: isModalOpen ? "hidden" : "visible",
+          pointerEvents: isModalOpen ? "none" : "all"
+        }}
+      >
         <Hero navTo={navTo} />
         <About navTo={navTo} />
         <Skills />
