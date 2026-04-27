@@ -23,7 +23,7 @@ const Hero = memo(({ navTo }) => {
           </p>
           <div className="hero-btns">
             <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
-            <DownloadBtn label="Download Resume" className="btn btn-outline" />
+            <DownloadBtn label="Download CV" className="btn btn-outline" />
           </div>
         </div>
 
