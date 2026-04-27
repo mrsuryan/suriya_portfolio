@@ -16,10 +16,6 @@ const Cursor = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) {
-      setIsMobile(true);
-      return;
-    }
 
     const onMouseMove = (e) => {
       if (!isActive) {
@@ -108,7 +104,7 @@ const Cursor = () => {
     };
   }, [isActive]);
 
-  if (isMobile) return null;
+
 
   return (
     <div style={{ display: isActive ? 'block' : 'none' }}>
