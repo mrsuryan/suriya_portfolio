@@ -1680,6 +1680,8 @@ body.light-theme .sbar-fill::after {
   text-decoration: none;
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 body.light-theme .contact-item {
@@ -2055,11 +2057,12 @@ body.light-theme .contact-item:hover {
   }
 
   .contact-container {
-    padding: 0;
+    padding: 0 10px;
     gap: 25px;
     width: 100% !important;
     max-width: 100% !important;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .exp-card, .edu-card {
@@ -2829,6 +2832,7 @@ body.light-theme .contact-item:hover {
   background: linear-gradient(135deg, rgba(20, 20, 20, 0.4), rgba(5, 5, 5, 0.6));
   z-index: 1;
   min-height: 101%; /* Force scrollability awareness */
+  box-sizing: border-box;
 }
 
 /* Custom Scrollbar for Modal Details */
@@ -3060,11 +3064,23 @@ body.light-theme .contact-item:hover {
   }
   
   .modal-details {
-    padding: 40px 30px;
+    padding: 30px 20px;
   }
   
   .modal-main-title {
     font-size: 2.5rem;
+  }
+
+  .modal-actions {
+    flex-direction: column !important;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .modal-actions .btn-premium, .modal-actions .btn-premium-disabled {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
   }
 
   .modal-overlay {
@@ -3092,9 +3108,19 @@ body.light-theme .contact-item:hover {
   }
 
   .modal-overlay {
+    padding: 10px; /* Minimal padding to maximize modal width */
     backdrop-filter: blur(10px) !important; 
     -webkit-backdrop-filter: blur(10px) !important;
     background: rgba(5, 5, 5, 0.8) !important;
+  }
+
+  .modal-details {
+    padding: 25px 15px; /* Even smaller padding on very small phones */
+  }
+
+  .modal-main-title {
+    font-size: 2rem;
+    word-break: break-word;
   }
   
   .modal-visuals {
@@ -3104,6 +3130,12 @@ body.light-theme .contact-item:hover {
   .modal-actions {
     flex-direction: column;
     gap: 12px;
+    width: 100%;
+  }
+  
+  .btn-premium {
+    width: 100%;
+    justify-content: center;
   }
   
   .modal-close-btn {
