@@ -16,6 +16,12 @@ const Cursor = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
+    // Hide cursor on touch-only devices (mobile/tablets)
+    const isTouchOnly = window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(any-pointer: fine)").matches;
+    if (isTouchOnly) {
+      setIsMobile(true);
+      return;
+    }
 
     const onMouseMove = (e) => {
       if (!isActive) {
@@ -106,6 +112,8 @@ const Cursor = () => {
 
 
 
+  if (isMobile) return null;
+  
   return (
     <div style={{ display: isActive ? 'block' : 'none' }}>
       <div className="cursor-outer-ring" ref={outerRingRef} style={{ transform: 'translate(-1000px, -1000px)' }}></div>
