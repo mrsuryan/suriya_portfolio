@@ -117,7 +117,7 @@ export default function Navbar({ activeNav, navTo, theme, toggleTheme }) {
                 {theme === "dark" ? <SunIcon /> : <MoonIcon />}
               </button>
               <div className="desktop-only">
-                <DownloadBtn label="Resume" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }} />
+                <DownloadBtn label="CV" className="btn btn-outline" style={{ padding: "8px 16px", fontSize: "0.8rem" }} />
               </div>
             </div>
 

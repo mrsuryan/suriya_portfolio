@@ -29,8 +29,8 @@ const Projects = memo(({ setSelectedProject, setIsModalOpen }) => {
                   height="338"
                 />
                 <div className="project-hover-hint">
-                  <span className="hint-icon">🔍</span>
-                  <span className="hint-text">Click to Explore Details</span>
+                  <span className="hint-icon">!</span>
+                  <span className="hint-text">Tap for Project Details</span>
                 </div>
               </div>
               <div className="project-content">
