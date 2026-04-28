@@ -2615,6 +2615,18 @@ body.light-theme .contact-item:hover {
   .project-hover-hint::after {
     display: none;
   }
+
+  body.light-theme .project-hover-hint {
+    background: var(--accent-cyan) !important;
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3) !important;
+  }
+
+  body.light-theme .project-hover-hint .hint-text,
+  body.light-theme .project-hover-hint .hint-icon {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+  }
 }
 
 /* ── SCROLL TO TOP ── */
