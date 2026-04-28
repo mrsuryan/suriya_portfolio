@@ -16,12 +16,19 @@ const Cursor = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    // Hide cursor on touch-only devices (mobile/tablets)
-    const isTouchOnly = window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(any-pointer: fine)").matches;
-    if (isTouchOnly) {
+    // Enhanced detection: Disable cursor if the device doesn't support hover 
+    // or lacks a fine pointer (like a mouse/trackpad)
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    
+    if (!canHover || !hasFinePointer) {
       setIsMobile(true);
       return;
     }
+
+    const onTouchStart = () => {
+      setIsMobile(true);
+    };
 
     const onMouseMove = (e) => {
       if (!isActive) {
@@ -99,6 +106,7 @@ const Cursor = () => {
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('mouseover', handleHover);
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
     rafId.current = requestAnimationFrame(render);
 
     return () => {
@@ -106,6 +114,7 @@ const Cursor = () => {
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
       window.removeEventListener('mouseover', handleHover);
+      window.removeEventListener('touchstart', onTouchStart);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, [isActive]);
