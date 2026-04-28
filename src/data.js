@@ -94,7 +94,7 @@ export const PROJECTS = [
       "Dynamic search & filter capabilities for intuitive discovery"
     ],
     chips:  ["Python", "Django", "Scikit-learn", "MySQL", "Machine Learning"],
-    image:  "/projects/cinemaflow.webp",
+    image:  "/projects/cinemaflow_premium.png",
     liveUrl:   "https://movie-recommendations-1-90ca.onrender.com/",
     sourceUrl: "https://github.com/mrsuryan/Movie-recommendations",
   },
@@ -112,7 +112,7 @@ export const PROJECTS = [
       "Interactive product showcases and dynamic hover states"
     ],
     chips:  ["HTML", "CSS", "JavaScript", "Responsive Design", "Animations"],
-    image:  "/projects/trev.webp",
+    image:  "/projects/trev_premium.png",
     liveUrl:   "https://terrv.netlify.app/",
     sourceUrl: "https://github.com/mrsuryan/pro",
   },
@@ -130,7 +130,7 @@ export const PROJECTS = [
       "Modular backend architecture using Python/Django"
     ],
     chips:  ["Python", "Django", "MySQL", "Responsive Design", "Full Stack"],
-    image:  "/projects/ecommerce.webp",
+    image:  "/projects/ecommerce_premium.png",
     liveUrl:   "comming Soon",
     sourceUrl: "Comming Soon",
   },
