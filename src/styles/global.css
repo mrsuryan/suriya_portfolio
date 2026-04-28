@@ -1171,6 +1171,51 @@ h2.section-title:hover {
 
 
 
+/* Structured Project Descriptions */
+.modal-structured-desc, .project-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.modal-desc-item, .card-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.desc-label, .card-detail-label {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  opacity: 0.9;
+}
+
+.modal-text-large, .card-detail-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin: 0 !important;
+}
+
+.card-detail-text {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+body.light-theme .card-detail-label,
+body.light-theme .desc-label {
+  color: var(--accent-purple);
+}
+
 /* ── PROJECTS ── */
 .project-grid {
   display: grid;

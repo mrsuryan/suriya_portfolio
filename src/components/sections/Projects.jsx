@@ -35,7 +35,16 @@ const Projects = memo(({ setSelectedProject, setIsModalOpen }) => {
               </div>
               <div className="project-content">
                 <h3 className="project-title">{p.title}</h3>
-                <p className="project-desc">{p.desc}</p>
+                <div className="project-card-details">
+                   <div className="card-detail-item">
+                      <span className="card-detail-label">Problem:</span>
+                      <p className="card-detail-text">{p.detailedDesc.problem}</p>
+                   </div>
+                   <div className="card-detail-item">
+                      <span className="card-detail-label">Impact:</span>
+                      <p className="card-detail-text">{p.detailedDesc.impact}</p>
+                   </div>
+                </div>
                 <div className="project-tags">
                   {p.chips.map(c => <span key={c} className="tag">{c}</span>)}
                 </div>

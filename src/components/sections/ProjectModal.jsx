@@ -48,8 +48,25 @@ const ProjectModal = memo(({ selectedProject, isModalOpen, setIsModalOpen }) => 
               
               <div className="modal-body-section">
                 <div className="modal-info-group">
-                  <h3 className="modal-sub">Overview</h3>
-                  <p className="modal-text-large">{selectedProject.detailedDesc}</p>
+                  <h3 className="modal-sub">Project Overview</h3>
+                  <div className="modal-structured-desc">
+                    <div className="modal-desc-item">
+                      <span className="desc-label">Problem:</span>
+                      <p className="modal-text-large">{selectedProject.detailedDesc.problem}</p>
+                    </div>
+                    <div className="modal-desc-item">
+                      <span className="desc-label">Solution:</span>
+                      <p className="modal-text-large">{selectedProject.detailedDesc.solution}</p>
+                    </div>
+                    <div className="modal-desc-item">
+                      <span className="desc-label">Tech:</span>
+                      <p className="modal-text-large">{selectedProject.detailedDesc.tech}</p>
+                    </div>
+                    <div className="modal-desc-item">
+                      <span className="desc-label">Impact:</span>
+                      <p className="modal-text-large">{selectedProject.detailedDesc.impact}</p>
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="modal-info-group">
