@@ -75,6 +75,7 @@ const ProjectModal = memo(({ selectedProject, isModalOpen, setIsModalOpen }) => 
               <div className="modal-actions">
                 {selectedProject.liveUrl.toLowerCase().includes("soon") ? (
                   <div className="btn-premium-disabled">
+                     <i className="fas fa-clock"></i>
                      <span>Live Demo Coming Soon</span>
                   </div>
                 ) : (
@@ -86,6 +87,7 @@ const ProjectModal = memo(({ selectedProject, isModalOpen, setIsModalOpen }) => 
                 
                 {selectedProject.sourceUrl.toLowerCase().includes("soon") ? (
                   <div className="btn-premium-disabled">
+                     <i className="fas fa-lock"></i>
                      <span>Source Code Private</span>
                   </div>
                 ) : (
