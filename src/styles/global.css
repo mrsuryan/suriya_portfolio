@@ -466,7 +466,20 @@ h1, h2, h3, h4, h5 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: all 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.grad-text:hover {
+  background-position: right center;
+  text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+  transform: translateY(-5px) scale(1.02);
+}
+
+body.light-theme .grad-text:hover {
+  text-shadow: 0 0 10px rgba(0, 136, 204, 0.2);
+  filter: brightness(0.8); /* Slightly darker for readability */
 }
 
 .section-loader {
@@ -844,6 +857,12 @@ body.light-theme .mobile-menu::before {
   justify-content: center;
   align-items: center;
   perspective: 1000px;
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
 }
 
 .hero-profile-container .pcard {
@@ -981,6 +1000,22 @@ body.light-theme .mobile-menu::before {
 .accent-text {
   color: var(--accent-cyan);
   font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.accent-text:hover {
+  color: #fff;
+  text-shadow: 0 0 12px var(--accent-cyan);
+  letter-spacing: 0.02em;
+  transform: translateY(-3px);
+}
+
+body.light-theme .accent-text:hover {
+  color: var(--accent-purple) !important;
+  text-shadow: 0 0 8px rgba(138, 43, 226, 0.2);
 }
 
 .hero-btns {
@@ -1134,16 +1169,7 @@ h2.section-title:hover {
 }
 
 
-.section-subtitle {
-  color: var(--accent-cyan);
-  font-family: var(--font-heading);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 0.8rem;
-  display: block;
-  margin-bottom: 15px;
-  text-align: center;
-}
+
 
 /* ── PROJECTS ── */
 .project-grid {
@@ -1552,6 +1578,26 @@ body.light-theme .sbar-fill::after {
   transform: scale(1.1);
   color: var(--text-main);
   text-shadow: 0 0 15px var(--accent-glow);
+}
+
+.section-subtitle {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  font-family: var(--font-heading);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+.section-subtitle:hover {
+  letter-spacing: 4px;
+  text-shadow: 0 0 10px var(--accent-glow);
+  transform: translateY(-4px);
 }
 
 .ach-number {
