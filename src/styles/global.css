@@ -1104,7 +1104,7 @@ body.light-theme .mobile-menu::before {
 }
 
 body.light-theme .hero-highlights li strong {
-  color: var(--bg-dark);
+  color: #7c3aed;
 }
 
 @media (max-width: 768px) {
@@ -1151,7 +1151,13 @@ body.light-theme .hero-highlights li strong {
   }
 
   body.light-theme .hero-highlights li strong {
-    color: #7c3aed !important;
+    color: #7c3aed !important; /* Proper purple contrast */
+    font-weight: 800 !important;
+  }
+
+  body.light-theme .hero-highlights li {
+    color: #111827 !important; /* Dark black for base text visibility */
+    font-weight: 700 !important; /* Make 'Developing', etc. bold */
   }
 }
 
@@ -1466,9 +1472,37 @@ body.light-theme .availability-text {
   overflow: hidden;
 }
 
-body.light-theme .card-detail-label,
-body.light-theme .section-subtitle {
+body.light-theme .footer-social-icon-circle {
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: #111827 !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+body.light-theme .footer-social-icon-circle:hover {
+  background: var(--accent-purple) !important;
+  color: #fff !important;
+}
+
+body.light-theme .footer-contact-item,
+body.light-theme .footer-nav-link {
+  color: #111827 !important;
+}
+
+body.light-theme .footer-contact-item:hover,
+body.light-theme .footer-nav-link:hover {
   color: var(--accent-purple) !important;
+}
+
+body.light-theme .cursor-dot {
+  background-color: var(--accent-purple) !important;
+}
+
+body.light-theme .cursor-inner-ring {
+  border-color: var(--accent-purple) !important;
+}
+
+body.light-theme .cursor-outer-ring {
+  border-color: rgba(124, 58, 237, 0.3) !important;
 }
 
 /* Base Achievement/Metric Styles */
