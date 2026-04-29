@@ -38,7 +38,8 @@ const Hero = memo(({ navTo }) => {
               className="hero-profile-img"
               width="450"
               height="450"
-              fetchpriority="high"
+              style={{ aspectRatio: "1 / 1" }}
+              fetchPriority="high"
               decoding="async"
               onError={(e) => { e.target.src = "/suriya_img.webp" }}
             />
