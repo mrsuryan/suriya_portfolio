@@ -26,12 +26,12 @@ const About = memo(({ navTo }) => {
 
           <div className="about-metrics">
              {STATS.filter(s => ["Projects Built", "Internship Exp", "Certifications"].includes(s.label)).map(x => (
-              <div key={x.label} className="ach-card glass hover-glow" style={{ textAlign: "left", padding: "20px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span className="ach-label" style={{ fontSize: "1.1rem", color: "var(--text-main)", fontWeight: "600" }}>{x.label}</span>
-                <span className="ach-number" style={{ fontSize: "2rem", marginBottom: 0 }}>
-                  <CountUp end={x.n} suffix={x.suffix} />
-                </span>
-              </div>
+               <div key={x.label} className="ach-card glass hover-glow" style={{ textAlign: "left", padding: "20px 30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                 <span className="ach-label" style={{ fontSize: "1.1rem", fontWeight: "600" }}>{x.label}</span>
+                 <span className="ach-number" style={{ fontSize: "2rem", marginBottom: 0 }}>
+                   <CountUp end={x.n} suffix={x.suffix} />
+                 </span>
+               </div>
             ))}
           </div>
         </div>
