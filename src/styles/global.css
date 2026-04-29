@@ -1074,6 +1074,10 @@ body.light-theme .hero-highlights li strong {
     color: #ffffff !important;
   }
 
+  body.light-theme .hero-highlights li {
+    color: #1f2937 !important; /* Dark grey/black for light theme */
+  }
+
   .highlight-icon {
     display: inline-block;
     margin-right: 8px;
@@ -1082,10 +1086,18 @@ body.light-theme .hero-highlights li strong {
     color: #00f3ff !important;
   }
 
+  body.light-theme .highlight-icon {
+    color: #7c3aed !important;
+  }
+
   .hero-highlights li strong {
     display: inline;
     color: #00f3ff !important;
     font-weight: 800 !important;
+  }
+
+  body.light-theme .hero-highlights li strong {
+    color: #7c3aed !important;
   }
 }
 
