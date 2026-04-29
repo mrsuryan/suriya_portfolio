@@ -17,7 +17,7 @@
   height: 2px;
   background: linear-gradient(-45deg, var(--accent-cyan), rgba(0, 0, 255, 0));
   border-radius: 999px;
-  filter: drop-shadow(0 0 6px var(--accent-cyan));
+  filter: drop-shadow(0 0 3px var(--accent-cyan));
   animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
 }
 

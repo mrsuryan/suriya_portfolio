@@ -5,18 +5,27 @@ const Background3D = () => {
   const sceneRef = useRef(null);
 
   useEffect(() => {
+    let rafId;
     const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const moveX = (clientX - window.innerWidth / 2) / 30;
-      const moveY = (clientY - window.innerHeight / 2) / 30;
+      if (rafId) return;
 
-      if (sceneRef.current) {
-        sceneRef.current.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
-      }
+      rafId = requestAnimationFrame(() => {
+        const { clientX, clientY } = e;
+        const moveX = (clientX - window.innerWidth / 2) / 30;
+        const moveY = (clientY - window.innerHeight / 2) / 30;
+
+        if (sceneRef.current) {
+          sceneRef.current.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
+        }
+        rafId = null;
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (

@@ -51,7 +51,7 @@ const Cursor = () => {
       mousePos.current = { x: e.clientX, y: e.clientY };
       
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
       }
     };
 
@@ -100,14 +100,14 @@ const Cursor = () => {
       innerPos.current.y += (mousePos.current.y - innerPos.current.y) * 0.2;
       
       if (innerRingRef.current) {
-        innerRingRef.current.style.transform = `translate(${innerPos.current.x}px, ${innerPos.current.y}px) translate(-50%, -50%) scale(${scale})`;
+        innerRingRef.current.style.transform = `translate3d(${innerPos.current.x}px, ${innerPos.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
       }
 
       outerPos.current.x += (mousePos.current.x - outerPos.current.x) * 0.1;
       outerPos.current.y += (mousePos.current.y - outerPos.current.y) * 0.1;
       
       if (outerRingRef.current) {
-        outerRingRef.current.style.transform = `translate(${outerPos.current.x}px, ${outerPos.current.y}px) translate(-50%, -50%) scale(${scale})`;
+        outerRingRef.current.style.transform = `translate3d(${outerPos.current.x}px, ${outerPos.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
       }
 
       rafId.current = requestAnimationFrame(render);

@@ -67,15 +67,21 @@ export default function App() {
   }, [isModalOpen]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile) {
+      document.documentElement.style.scrollBehavior = "smooth";
+      return;
+    }
+
+    // Force auto scroll-behavior for Lenis to work perfectly
+    document.documentElement.style.scrollBehavior = "auto";
 
     const lenis = new Lenis({
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.15, // Snappier feel
+      smoothWheel: true,
+      syncTouch: true,
+      wheelMultiplier: 1.0,
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.9, // Slightly reduced for better control
     });
 
     window.lenis = lenis;
@@ -90,6 +96,7 @@ export default function App() {
     return () => {
       lenis.destroy();
       window.lenis = null;
+      document.documentElement.style.scrollBehavior = "smooth";
     };
   }, [isMobile]);
 
