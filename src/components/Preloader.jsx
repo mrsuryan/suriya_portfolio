@@ -12,7 +12,7 @@ export default function Preloader({ onFinish }) {
       setLoading(false);
       document.body.style.overflow = "";
       onFinish?.();
-    }, 800);
+    }, 1800);
     
     return () => { 
       clearTimeout(tStart);
@@ -23,24 +23,20 @@ export default function Preloader({ onFinish }) {
 
   if (!loading) return null;
 
-  const name = "SURIYA.C";
-
   return (
-    <div className={`luxury-preloader ${active ? "is-active" : ""}`}>
-      <div className="luxury-content">
-        <div className="luxury-name-wrapper">
-          {name.split("").map((char, i) => (
-            <span 
-              key={i} 
-              className="luxury-char" 
-              style={{ transitionDelay: `${0.05 + (i * 0.05)}s` }}
-            >
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-          <div className="luxury-shimmer"></div>
+    <div className={`premium-preloader ${active ? "is-active" : ""}`}>
+      <div className="preloader-overlay top"></div>
+      <div className="preloader-overlay bottom"></div>
+      
+      <div className="preloader-content">
+        <div className="preloader-brand">
+          <span className="brand-welcome">WELCOME TO</span>
+          <h1 className="brand-name">SURIYA C</h1>
+          <span className="brand-suffix">PORTFOLIO</span>
         </div>
-        <div className="luxury-line"></div>
+        <div className="preloader-progress-container">
+          <div className="preloader-progress-bar"></div>
+        </div>
       </div>
     </div>
   );
