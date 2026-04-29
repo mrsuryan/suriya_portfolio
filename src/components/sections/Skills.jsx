@@ -9,19 +9,24 @@ const Skills = memo(() => {
         <span className="section-subtitle">02 / Skills</span>
         <h2 className="section-title reveal">My <span className="grad-text">Tech Stack</span></h2>
         
-        <div className="contact-container reveal" data-delay="0.2" style={{ marginBottom: "60px" }}>
-          <div style={{ display: "grid", gap: "20px" }}>
-            {PROFICIENCIES.slice(0, 4).map(s => <SkillBar key={s.label} {...s} />)}
-          </div>
-          <div style={{ display: "grid", gap: "20px" }}>
-            {PROFICIENCIES.slice(4).map(s => <SkillBar key={s.label} {...s} />)}
-          </div>
-        </div>
-
-        <div className="skill-grid">
-          {PROFICIENCIES.map((s, i) => (
-            <div key={i} className="glass skill-card hover-glow reveal" data-delay={i * 0.05} title={s.label}>
-              <div className="skill-icon" style={{ marginBottom: 0, fontSize: "3rem" }}>{s.icon}</div>
+        <div className="skills-rows-wrapper">
+          {PROFICIENCIES.map((cat, i) => (
+            <div key={i} className="glass skill-row-card reveal" data-delay={i * 0.1}>
+              <div className="skill-row-header">
+                <span className="category-indicator"></span>
+                <h3 className="skill-row-title">{cat.category}</h3>
+              </div>
+              <div className="skill-row-tags">
+                {cat.skills.map((s, j) => (
+                  <div key={j} className="skill-tag">
+                    <span className="tag-icon">{s.icon}</span>
+                    <div className="tag-content">
+                      <span className="tag-label">{s.label}</span>
+                      <span className={`tag-level ${s.level.toLowerCase()}`}>{s.level}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

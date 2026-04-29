@@ -9,7 +9,7 @@ export const PERSONAL = {
   name:       "Suriya C",
   logoText:   "SURIYA.DEV",
   tagline:    "Crafting clean, scalable, and intelligent web solutions with Python & Django.",
-  description: "I am an aspiring Full Stack Developer and Computer Science Engineer (Class of 2026) with a strong foundational grasp of backend and frontend technologies. My practical journey began during my internship at Pydun Technology, where I learned to apply Python and Django to solve real-world development challenges.\n\nI focus on writing clean, effective code and building a solid understanding of database management and system architecture. I am a fast learner and tech enthusiast, always looking for opportunities to contribute my skills to meaningful projects while continuously growing as a developer.",
+  description: "Aspiring Full Stack Developer and Computer Science Engineer (Class of 2026). I specialize in building clean, scalable web applications using Python and Django, with a focus on efficient system design and modern AI integration.\n\nHaving successfully completed my Full Stack Internship at Pydun Technology, I am now focused on applying my skills to complex challenges and creating high-performance digital experiences.",
   badge:      "AVAILABLE FOR INTERNSHIPS & ROLES — 2026",
 
   email:    "mrsuriyan200549@gmail.com",
@@ -42,13 +42,56 @@ export const SOFT_SKILLS = [
 ];
 
 export const PROFICIENCIES = [
-  { label: "Python",          pct: 70, icon: "🐍" },
-  { label: "Django",          pct: 60, icon: "🎯" },
-  { label: "JavaScript",      pct: 55, icon: "📜" },
-  { label: "SQL / MySQL",     pct: 75, icon: "🗄️" },
-  { label: "HTML5 & CSS3",    pct: 80, icon: "🎨" },
-  { label: "Git & GitHub",    pct: 70, icon: "🔧" },
-  { label: "AI Integration",  pct: 50, icon: "🤖" },
+  { 
+    category: "Frontend", 
+    skills: [
+      { label: "HTML5", icon: "🎨", level: "Intermediate" },
+      { label: "CSS3", icon: "🎨", level: "Intermediate" },
+      { label: "JavaScript", icon: "📜", level: "Beginner" },
+      { label: "React", icon: "⚛️", level: "Beginner" },
+      { label: "Tailwind CSS", icon: "🌊", level: "Beginner" }
+    ] 
+  },
+  { 
+    category: "Backend", 
+    skills: [
+      { label: "Python", icon: "🐍", level: "Intermediate" },
+      { label: "Django", icon: "🎯", level: "Intermediate" },
+      { label: "Django REST Framework", icon: "🚀", level: "Beginner" }
+    ] 
+  },
+  { 
+    category: "Database", 
+    skills: [
+      { label: "MySQL", icon: "🗄️", level: "Intermediate" },
+    ] 
+  },
+  { 
+    category: "Tools", 
+    skills: [
+      { label: "Git", icon: "🔧", level: "Intermediate" },
+      { label: "GitHub", icon: "🐙", level: "Intermediate" },
+      { label: "VS Code", icon: "💻", level: "Intermediate" }
+    ] 
+  },
+  { 
+    category: "AI Tools", 
+    skills: [
+      { label: "Cursor", icon: "🤖", level: "AI-assisted coding" },
+      { label: "ChatGPT", icon: "🧠", level: "debugging & logic building" },
+      { label: "GitHub Copilot", icon: "🐙", level: "code suggestions" },
+      { label: "Claude", icon: "🎭", level: "Advanced coding & reasoning" },
+      { label: "Antigravity", icon: "🌌", level: "Autonomous coding & Full-stack partner" }
+    ] 
+  },
+  { 
+    category: "Other", 
+    skills: [
+      { label: "AI Integration", icon: "🤖", level: "Beginner" },
+      { label: "Deployment (Netlify, Render)", icon: "☁️", level: "Intermediate" },
+      { label: "Problem Solving", icon: "🧠", level: "Beginner" }
+    ] 
+  }
 ];
 
 export const STACK_CARDS = [
@@ -64,7 +107,7 @@ export const EXPERIENCE = [
   {
     role:    "Full Stack Developer Intern",
     company: "Pydun Technology Private Limited",
-    period:  "Jan 2026 – Present",
+    period:  "Jan 2026 – Apr 2026",
     bullets: [
       "Architecting and implementing full-stack web applications using Python and Django framework.",
       "Optimizing MySQL database schemas for better performance and scalability.",

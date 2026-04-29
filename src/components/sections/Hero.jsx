@@ -9,7 +9,7 @@ const Hero = memo(({ navTo }) => {
     <section className="hero" id="home">
       <div className="container hero-content reveal">
         <div className="hero-text-block">
-          <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px" }}>
+          <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px", marginSide: "0", marginLeft: "0" }}>
             Software Engineer & Full Stack Developer
           </span>
           <h1 className="hero-title">
@@ -17,10 +17,13 @@ const Hero = memo(({ navTo }) => {
             <TypingHero />
           </h1>
           <p className="hero-desc">
-            Expertly building intelligent applications with <span className="accent-text">AI</span>, 
-            <span className="accent-text"> Python</span>, and <span className="accent-text"> Django</span>. 
-            Computer Science Engineer focused on high-performance Fullstack solutions.
+            I build <span className="accent-text">AI-powered</span> web applications using <span className="accent-text">Django</span> & <span className="accent-text">Machine Learning</span>.
           </p>
+          <ul className="hero-highlights">
+            <li className="reveal" data-delay="0.4"><span className="highlight-icon">→</span> Developing <strong>Scalable Backend with Python & Django</strong></li>
+            <li className="reveal" data-delay="0.5"><span className="highlight-icon">→</span> Integrating <strong>AI to Solve Real-World Challenges</strong></li>
+            <li className="reveal" data-delay="0.6"><span className="highlight-icon">→</span> Crafting <strong>High-Performance Web Experiences</strong></li>
+          </ul>
           <div className="hero-btns">
             <button className="btn btn-primary" onClick={() => navTo("projects")}>Explore My Work</button>
             <DownloadBtn label="Download CV" className="btn btn-outline" />

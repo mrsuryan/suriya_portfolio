@@ -12,7 +12,11 @@ const Contact = memo(({ sent, isSubmitting, handleFormSubmit }) => {
         <div className="contact-container">
           <div className="contact-info">
             <h3>Get In Touch</h3>
-            <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+            <div className="availability-badge">
+              <span className="pulse-dot"></span>
+              <span className="availability-text">Open to Work | Available for Full-Time Roles</span>
+            </div>
+            <p>I’m currently open to full-time opportunities.<br />If you have a project or opportunity, feel free to reach out.</p>
             <div className="contact-items">
               <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Send me an email">
                 <div className="contact-icon"><EmailIcon /></div>
