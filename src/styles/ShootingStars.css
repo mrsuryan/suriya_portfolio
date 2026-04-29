@@ -54,6 +54,17 @@
   100% { transform: translateX(300px); }
 }
 
+@media (max-width: 768px) {
+  .shooting-star {
+    filter: none !important; /* Save GPU on mobile */
+    animation-duration: 5s !important; /* Slower, less frequent updates */
+  }
+  .shooting-star::before, .shooting-star::after {
+    animation: none !important;
+    display: none;
+  }
+}
+
 .star-1 { top: 10%; left: 30%; animation-delay: 1000ms; }
 .star-2 { top: 30%; left: 80%; animation-delay: 3500ms; }
 .star-3 { top: 50%; left: 10%; animation-delay: 6000ms; }

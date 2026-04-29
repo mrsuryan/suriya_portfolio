@@ -34,6 +34,8 @@ const Hero = memo(({ navTo }) => {
           <TiltCard>
             <img 
               src="/suriya_img.webp" 
+              srcSet="/suriya_img_mobile.webp 400w, /suriya_img.webp 800w"
+              sizes="(max-width: 768px) 400px, 800px"
               alt={PERSONAL.name} 
               className="hero-profile-img"
               width="450"
