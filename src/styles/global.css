@@ -1016,10 +1016,27 @@ body.light-theme .mobile-menu::before {
   cursor: default;
 }
 
-.hero-highlights li:hover {
-  transform: translateY(-8px) scale(1.02);
-  color: var(--accent-cyan);
-  text-shadow: 0 5px 15px rgba(0, 243, 255, 0.2);
+@media (hover: hover) {
+  .hero-highlights li:hover {
+    transform: translateY(-8px) scale(1.02);
+    color: var(--accent-cyan);
+    text-shadow: 0 5px 15px rgba(0, 243, 255, 0.2);
+  }
+
+  .hero-highlights li:hover strong {
+    color: #fff;
+    text-shadow: 0 0 15px var(--accent-cyan);
+    letter-spacing: 0.02em;
+    transform: translateY(-2px);
+  }
+
+  .hero-highlights li:hover .highlight-icon {
+    transform: scale(1.2) rotate(10deg);
+  }
+
+  body.light-theme .hero-highlights li:hover {
+    color: var(--accent-purple);
+  }
 }
 
 .hero-highlights li strong {
@@ -1027,13 +1044,6 @@ body.light-theme .mobile-menu::before {
   font-weight: 700;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   display: inline-block;
-}
-
-.hero-highlights li:hover strong {
-  color: #fff;
-  text-shadow: 0 0 15px var(--accent-cyan);
-  letter-spacing: 0.02em;
-  transform: translateY(-2px);
 }
 
 .highlight-icon {
@@ -1044,16 +1054,40 @@ body.light-theme .mobile-menu::before {
   transition: transform 0.3s ease;
 }
 
-.hero-highlights li:hover .highlight-icon {
-  transform: scale(1.2) rotate(10deg);
-}
-
-body.light-theme .hero-highlights li:hover {
-  color: var(--accent-purple);
-}
-
 body.light-theme .hero-highlights li strong {
   color: var(--bg-dark);
+}
+
+@media (max-width: 768px) {
+  .hero-highlights {
+    margin: 0 auto 35px;
+    width: 100%;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-highlights li {
+    display: block; /* Force block to allow natural text wrapping */
+    text-align: center;
+    font-size: 0.95rem;
+    width: 100%;
+    max-width: 320px; /* Prevent it from being too wide/narrow */
+    padding: 0;
+    line-height: 1.5;
+  }
+
+  .highlight-icon {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 1.1rem;
+    vertical-align: middle;
+  }
+
+  .hero-highlights li strong {
+    display: inline; /* Keep it inline with the rest of the text */
+  }
 }
 
 .accent-text {
