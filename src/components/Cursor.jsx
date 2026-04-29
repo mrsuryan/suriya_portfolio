@@ -13,24 +13,35 @@ const Cursor = () => {
   
   const [ripples, setRipples] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const isMobileRef = useRef(false);
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    // Enhanced detection: Disable cursor if the device doesn't support hover 
-    // or lacks a fine pointer (like a mouse/trackpad)
     const canHover = window.matchMedia("(hover: hover)").matches;
     const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
     
     if (!canHover || !hasFinePointer) {
       setIsMobile(true);
+      isMobileRef.current = true;
       return;
     }
 
     const onTouchStart = () => {
       setIsMobile(true);
+      isMobileRef.current = true;
     };
 
     const onMouseMove = (e) => {
+      // Re-enable cursor if mouse movement is detected
+      if (isMobileRef.current) {
+        const canHover = window.matchMedia("(hover: hover)").matches;
+        const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+        if (canHover && hasFinePointer) {
+          setIsMobile(false);
+          isMobileRef.current = false;
+        }
+      }
+
       if (!isActive) {
         setIsActive(true);
         innerPos.current = { x: e.clientX, y: e.clientY };
