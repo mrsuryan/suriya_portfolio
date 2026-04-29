@@ -9,7 +9,7 @@ const Hero = memo(({ navTo }) => {
     <section className="hero" id="home">
       <div className="container hero-content reveal">
         <div className="hero-text-block">
-          <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px", marginSide: "0", marginLeft: "0" }}>
+          <span className="section-subtitle" style={{ textAlign: "left", marginBottom: "10px", marginLeft: "0", marginRight: "auto" }}>
             Software Engineer & Full Stack Developer
           </span>
           <h1 className="hero-title">

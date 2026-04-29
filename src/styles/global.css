@@ -1186,19 +1186,20 @@ body.light-theme .accent-text:hover {
   text-shadow: 0 0 15px var(--accent-glow);
 }
 
-body.light-theme .section-subtitle {
-  color: var(--accent-purple);
-}
-
 @media (max-width: 768px) {
   .section-subtitle {
-    color: var(--accent-cyan) !important;
+    color: #00f3ff !important; 
     opacity: 1 !important;
-    text-shadow: 0 0 10px var(--accent-glow);
+    font-weight: 800 !important;
+    text-shadow: 0 0 12px rgba(0, 243, 255, 0.4) !important;
+    filter: brightness(1.2) !important;
+    -webkit-text-fill-color: #00f3ff !important;
   }
   
   body.light-theme .section-subtitle {
-    color: var(--accent-purple) !important;
+    color: #7c3aed !important;
+    -webkit-text-fill-color: #7c3aed !important;
+    text-shadow: none !important;
   }
 }
 .section-title {
