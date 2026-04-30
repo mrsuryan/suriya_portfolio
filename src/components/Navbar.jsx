@@ -82,7 +82,7 @@ export default function Navbar({ activeNav, navTo, theme, toggleTheme }) {
             style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", padding: 0 }}
           >
             <img 
-              src="/brand_logo.png" 
+              src="/brand_logo.webp" 
               alt="Suriya C Logo" 
               width="32" 
               height="32" 

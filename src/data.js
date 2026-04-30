@@ -148,26 +148,26 @@ export const PROJECTS = [
   },
   {
     number: "02",
-    icon:   "🛍️",
-    title:  "Trev Page Clone",
-    desc:   "A responsive and dynamic clone of the Trev page, built with a focus on high-performance and luxury aesthetics.",
+    icon:   "🎓",
+    title:  "EduHub - Digital Learning Portal",
+    desc:   "A modern educational platform designed to streamline access to digital courses and study materials.",
     detailedDesc: {
-      problem: "Replicating high-end, complex luxury UI layouts and fluid animations without compromising on performance.",
-      solution: "Pixel-perfect reconstruction using modern CSS techniques, Intersection Observer, and asset optimization.",
-      tech: "HTML, CSS, JavaScript, Animations",
-      impact: "Achieved near-instant load times with fluid 60FPS transitions across all device types."
+      problem: "Students and educators lack a centralized, high-performance platform for organized digital resource access.",
+      solution: "Developed a comprehensive learning portal with a focus on fast navigation, categorized resources, and modern UI.",
+      tech: "SvelteKit, Tailwind CSS, JavaScript, Responsive UI",
+      impact: "Improved resource discovery speed and provided a seamless educational experience across all devices."
     },
     features: [
-      "Fluid Scroll & Reveal animations using Intersection Observer",
-      "Custom CSS Grid & Flexbox for pixel-perfect responsiveness",
-      "High-performance asset optimization for near-instant loads",
-      "Modern Glassmorphism UI elements with backdrop filtering",
-      "Interactive product showcases and dynamic hover states"
+      "Modern & Fast UI built with SvelteKit",
+      "Dynamic Resource Categorization for easy access",
+      "Tailwind CSS for pixel-perfect responsive design",
+      "Optimized Asset Loading for high performance",
+      "Interactive Course & Material Showcase"
     ],
-    chips:  ["HTML", "CSS", "JavaScript", "Responsive Design", "Animations"],
-    image:  "/projects/trev_premium.webp",
-    liveUrl:   "https://terrv.netlify.app/",
-    sourceUrl: "https://github.com/mrsuryan/pro",
+    chips:  ["React.js", "Tailwind CSS", "JavaScript", "Responsive Design", "Frontend"],
+    image:  "/projects/eduhub_premium.webp",
+    liveUrl:   "https://eduhuba.netlify.app/",
+    sourceUrl: "https://github.com/mrsuryan/studio",
   },
   {
     number: "03",

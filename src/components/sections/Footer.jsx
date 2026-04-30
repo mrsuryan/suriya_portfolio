@@ -17,7 +17,7 @@ const Footer = memo(({ navTo }) => {
               style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }}
             >
               <img 
-                src="/brand_logo.png" 
+                src="/brand_logo.webp" 
                 alt="Suriya C Logo" 
                 width="30" 
                 height="30" 
