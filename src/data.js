@@ -9,7 +9,7 @@ export const PERSONAL = {
   name:       "Suriya C",
   logoText:   "SURIYA.DEV",
   tagline:    "Crafting clean, scalable, and intelligent web solutions with Python & Django.",
-  description: "Aspiring Full Stack Developer and Computer Science Engineer (Class of 2026). I specialize in building clean, scalable web applications using Python and Django, with a focus on efficient system design and modern AI integration.\n\nHaving successfully completed my Full Stack Internship at Pydun Technology, I am now focused on applying my skills to complex challenges and creating high-performance digital experiences.",
+  description: "Welcome to my Full Stack Developer Portfolio. I am Suriya C, an aspiring Software Engineer (Class of 2026) specializing in building clean, scalable web applications using Python and Django, with a focus on efficient system design and modern AI integration.\n\nHaving successfully completed my Full Stack Internship at Pydun Technology, I am now focused on applying my skills to complex challenges and creating high-performance digital experiences.",
   badge:      "AVAILABLE FOR INTERNSHIPS & ROLES — 2026",
 
   email:    "mrsuriyan200549@gmail.com",
