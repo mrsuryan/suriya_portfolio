@@ -32,7 +32,7 @@ const Contact = memo(({ sent, isSubmitting, handleFormSubmit }) => {
                   <div className="skill-name">Suriya C</div>
                 </div>
               </a>
-              <a href={PERSONAL.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Chat with me on WhatsApp">
+              <a href={PERSONAL.whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Chat with me on WhatsApp">
                 <div className="contact-icon"><WhatsAppIcon /></div>
                 <div>
                   <div className="form-label" style={{ marginBottom: 0 }}>WhatsApp</div>

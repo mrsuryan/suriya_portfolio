@@ -21,7 +21,6 @@ import Footer       from "./components/sections/Footer";
 const Particles     = lazy(() => import("./components/Particles"));
 const ShootingStars = lazy(() => import("./components/ShootingStars"));
 const MobileBackground = lazy(() => import("./components/MobileBackground"));
-const Floating3D = lazy(() => import("./components/Floating3D"));
 const ProjectModal  = lazy(() => import("./components/sections/ProjectModal"));
 
 // ── Hooks ──
@@ -181,6 +180,7 @@ export default function App() {
       
       <Suspense fallback={null}>
         {!isMobile && !isModalOpen && <ShootingStars />}
+        {!isMobile && !isModalOpen && <Particles />}
         {!isModalOpen && <MobileBackground />}
       </Suspense>
       

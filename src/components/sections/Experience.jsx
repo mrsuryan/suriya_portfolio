@@ -8,7 +8,7 @@ const Experience = memo(() => {
         <div className="contact-container">
           <div>
             <span className="section-subtitle">03 / Experience</span>
-            <h2 className="section-title" style={{ textAlign: "center" }}>Where I've <span className="grad-text">Worked</span></h2>
+            <h2 className="section-title">Where I've <span className="grad-text">Worked</span></h2>
             <div className="contact-items">
               {EXPERIENCE.map((exp, i) => (
                 <div key={i} className="glass exp-card hover-glow reveal" style={{ padding: "30px", marginBottom: "20px" }}>

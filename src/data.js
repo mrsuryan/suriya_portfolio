@@ -3,8 +3,6 @@
    All text, links, skills, projects, etc. live in this file.
 ───────────────────────────────────────────────────────────────── */
 
-import Cursor from "./components/Cursor";
-
 export const PERSONAL = {
   name:       "Suriya C",
   logoText:   "SURIYA.DEV",
@@ -189,8 +187,8 @@ export const PROJECTS = [
     ],
     chips:  ["Python", "Django", "MySQL", "Responsive Design", "Full Stack"],
     image:  "/projects/ecommerce_premium.webp",
-    liveUrl:   "comming Soon",
-    sourceUrl: "Comming Soon",
+    liveUrl:   "Coming Soon",
+    sourceUrl: "Coming Soon",
   },
 ];
 
