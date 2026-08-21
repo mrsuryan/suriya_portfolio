@@ -7,6 +7,7 @@ import Preloader   from "./components/Preloader";
 import Cursor      from "./components/Cursor";
 import Navbar      from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollProgress from "./components/ScrollProgress";
 
 // ── Sections (Non-Lazy for Stability) ──
 import Hero         from "./components/sections/Hero";
@@ -172,6 +173,7 @@ export default function App() {
 
   return (
     <div className="main-wrapper" style={{ overflowX: "hidden", position: "relative", background: "transparent", zIndex: 1 }}>
+      <ScrollProgress />
       <Preloader onFinish={() => {
         setSiteReady(true);
         setTimeout(() => window.scrollTo(0, 0), 0);

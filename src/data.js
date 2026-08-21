@@ -24,9 +24,9 @@ export const PERSONAL = {
 
 export const TYPING_ROLES = [
   "Full Stack Developer",
-  "AI/ML Engineer",
-  "Django Expert",
-  "Python Developer",
+  "Python & Django Specialist",
+  "Machine Learning Engineer",
+  "Modern Web Developer",
 ];
 
 export const STATS = [

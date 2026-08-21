@@ -4,39 +4,59 @@ import { EXPERIENCE, EDUCATION } from "../../data";
 const Experience = memo(() => {
   return (
     <section id="experience" className="bg-card">
-      <div className="container reveal">
-        <div className="contact-container">
+      <div className="container">
+        <div className="exp-edu-grid">
+          {/* ── EXPERIENCE ── */}
           <div>
-            <span className="section-subtitle">03 / Experience</span>
-            <h2 className="section-title">Where I've <span className="grad-text">Worked</span></h2>
-            <div className="contact-items">
+            <span className="section-subtitle rev" data-delay="0">03 / Experience</span>
+            <h2 className="section-title exp-title rev" data-delay="0.05">
+              Where I've <span className="grad-text">Worked</span>
+            </h2>
+            <div className="timeline-wrapper">
               {EXPERIENCE.map((exp, i) => (
-                <div key={i} className="glass exp-card hover-glow reveal" style={{ padding: "30px", marginBottom: "20px" }}>
-                  <div className="exp-header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px", alignItems: "flex-start", gap: "15px" }}>
-                    <h3 style={{ fontSize: "1.3rem" }}>{exp.role}</h3>
-                    <span className="tag" style={{ color: "var(--accent-cyan)", borderColor: "var(--accent-cyan)", whiteSpace: "nowrap" }}>{exp.period}</span>
+                <div key={i} className="timeline-item rev-left" data-delay={`${i * 0.15}`}>
+                  <div className="timeline-dot">
+                    <span className="timeline-dot-inner" />
                   </div>
-                  <p style={{ color: "var(--accent-cyan)", marginBottom: "15px", fontWeight: "600" }}>{exp.company}</p>
-                  <ul style={{ listStyle: "none" }}>
-                    {exp.bullets.map((b, j) => (
-                      <li key={j} style={{ color: "var(--text-muted)", marginBottom: "10px", paddingLeft: "20px", position: "relative" }}>
-                        <span style={{ position: "absolute", left: 0, color: "var(--accent-cyan)" }}>▹</span> {b}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="timeline-line" />
+                  <div className="glass exp-card hover-glow timeline-card">
+                    <div className="exp-header">
+                      <h3 className="exp-role">{exp.role}</h3>
+                      <span className="tag exp-period">{exp.period}</span>
+                    </div>
+                    <p className="exp-company">{exp.company}</p>
+                    <ul className="exp-bullets">
+                      {exp.bullets.map((b, j) => (
+                        <li key={j} className="exp-bullet">
+                          <span className="bullet-arrow">▹</span>
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* ── EDUCATION ── */}
           <div>
-            <span className="section-subtitle">04 / Education</span>
-            <h2 className="section-title reveal">Educational <span className="grad-text">Background</span></h2>
-            <div className="contact-items">
+            <span className="section-subtitle rev" data-delay="0.1">04 / Education</span>
+            <h2 className="section-title edu-title rev" data-delay="0.15">
+              Educational <span className="grad-text">Background</span>
+            </h2>
+            <div className="timeline-wrapper">
               {EDUCATION.map((edu, i) => (
-                <div key={i} className="glass edu-card hover-glow" style={{ padding: "30px", marginBottom: "20px" }}>
-                  <h3 style={{ fontSize: "1.1rem", marginBottom: "10px" }}>{edu.degree}</h3>
-                  <p style={{ color: "var(--text-muted)", marginBottom: "5px" }}>{edu.institution}</p>
-                  <span className="tag">{edu.year}</span>
+                <div key={i} className="timeline-item rev-right" data-delay={`${i * 0.15}`}>
+                  <div className="timeline-dot">
+                    <span className="timeline-dot-inner" />
+                  </div>
+                  {i < EDUCATION.length - 1 && <div className="timeline-line" />}
+                  <div className="glass edu-card hover-glow timeline-card">
+                    <h3 className="edu-degree">{edu.degree}</h3>
+                    <p className="edu-institution">{edu.institution}</p>
+                    <span className="tag edu-year">{edu.year}</span>
+                  </div>
                 </div>
               ))}
             </div>

@@ -5,34 +5,33 @@ import { PERSONAL } from "../../data";
 const Contact = memo(({ sent, isSubmitting, handleFormSubmit }) => {
   return (
     <section id="contact">
-      <div className="container reveal">
-        <span className="section-subtitle">06 / Contact</span>
-        <h2 className="section-title reveal">Get In <span className="grad-text">Touch</span></h2>
-        
+      <div className="container">
+        <span className="section-subtitle rev" data-delay="0">06 / Contact</span>
+        <h2 className="section-title rev" data-delay="0.05">Get In <span className="grad-text">Touch</span></h2>
+
         <div className="contact-container">
-          <div className="contact-info">
-            <h3>Get In Touch</h3>
+          <div className="contact-info rev-left" data-delay="0.1">
             <div className="availability-badge">
               <span className="pulse-dot"></span>
               <span className="availability-text">Open to Work | Available for Full-Time Roles</span>
             </div>
-            <p>I’m currently open to full-time opportunities.<br />If you have a project or opportunity, feel free to reach out.</p>
+            <p className="contact-intro">I'm currently open to full-time opportunities.<br />If you have a project or opportunity, feel free to reach out.</p>
             <div className="contact-items">
-              <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Send me an email">
+              <a href={PERSONAL.emailLink} target="_blank" rel="noopener noreferrer" className="contact-item rev-left" data-delay="0.15" aria-label="Send me an email">
                 <div className="contact-icon"><EmailIcon /></div>
                 <div>
                   <div className="form-label" style={{ marginBottom: 0 }}>Email</div>
                   <div className="skill-name">{PERSONAL.email}</div>
                 </div>
               </a>
-              <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Visit my LinkedIn profile">
+              <a href={PERSONAL.linkedin} target="_blank" rel="noopener noreferrer" className="contact-item rev-left" data-delay="0.2" aria-label="Visit my LinkedIn profile">
                 <div className="contact-icon"><LinkedInIcon /></div>
                 <div>
                   <div className="form-label" style={{ marginBottom: 0 }}>LinkedIn</div>
                   <div className="skill-name">Suriya C</div>
                 </div>
               </a>
-              <a href={PERSONAL.whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-item" aria-label="Chat with me on WhatsApp">
+              <a href={PERSONAL.whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-item rev-left" data-delay="0.25" aria-label="Chat with me on WhatsApp">
                 <div className="contact-icon"><WhatsAppIcon /></div>
                 <div>
                   <div className="form-label" style={{ marginBottom: 0 }}>WhatsApp</div>
@@ -42,7 +41,7 @@ const Contact = memo(({ sent, isSubmitting, handleFormSubmit }) => {
             </div>
           </div>
 
-          <div className="glass contact-form-glass" style={{ padding: "40px" }}>
+          <div className="glass contact-form-glass rev-right" data-delay="0.15" style={{ padding: "40px" }}>
             {sent ? (
               <div style={{ textAlign: "center", padding: "40px 0" }}>
                 <div style={{ fontSize: "3rem", marginBottom: "20px" }}>🚀</div>
