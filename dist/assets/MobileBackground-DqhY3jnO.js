@@ -1,1 +1,0 @@
-import{j as s}from"./index-hhPZgA0H.js";const a=()=>s.jsxs("div",{className:"mobile-bg-container",children:[s.jsx("div",{className:"cyber-grid"}),s.jsx("div",{className:"scanline"}),s.jsx("div",{className:"mobile-blob blob-cyan"}),s.jsx("div",{className:"mobile-blob blob-purple"})]});export{a as default};
